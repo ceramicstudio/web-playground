@@ -1,9 +1,10 @@
 import web3Modal from './providers.js'
 const { ThreeIdConnect, EthereumAuthProvider } = require('./../src/index')
-const THREEID_CONNECT_URL = 'https://3idconnect.org/index.html'
 import { DID } from 'dids'
 import IPFS from 'ipfs'
 import Ceramic from '@ceramicnetwork/ceramic-core'
+import ThreeIdResolver from '@ceramicnetwork/3id-did-resolver'
+import KeyDidResolver from '@ceramicnetwork/key-did-resolver'
 
 import dagJose from 'dag-jose'
 import multiformats from 'multiformats/basics'
@@ -12,8 +13,14 @@ import legacy from 'multiformats/legacy'
 multiformats.multicodec.add(dagJose)
 const dagJoseFormat = legacy(multiformats, dagJose.name)
 
-const threeIdConnect = new ThreeIdConnect(THREEID_CONNECT_URL)
-const ipfsPromise = IPFS.create({ ipld: { formats: [dagJoseFormat] } })
+const threeIdConnect = new ThreeIdConnect()
+
+const start = async () => {
+  // create ipfs and ceramic
+  window.ipfs = await IPFS.create({ ipld: { formats: [dagJoseFormat] } })
+  window.ceramic = await Ceramic.create(window.ipfs)
+}
+const startPromise = start()
 
 const authenticate = async () => {
   const ethProvider = await web3Modal.connect()
@@ -25,14 +32,17 @@ const authenticate = async () => {
 
   // create did instance
   const didProvider = await threeIdConnect.getDidProvider()
-  const did = new DID({ provider: didProvider })
+  await startPromise
+  const resolver = {
+    registry: {
+      ...KeyDidResolver.getResolver(), ...ThreeIdResolver.getResolver(window.ceramic)
+    }
+  }
+  const did = new DID({ provider: didProvider, resolver })
   await did.authenticate()
   window.did = did
   console.log('Connected with DID:', did.id)
 
-  // create ipfs and ceramic
-  window.ipfs = await ipfsPromise
-  window.ceramic = await Ceramic.create(window.ipfs)
 }
 
 bauth.addEventListener('click', authenticate)
