@@ -40,6 +40,7 @@ const authenticate = async () => {
   }
   const did = new DID({ provider: didProvider, resolver })
   await did.authenticate()
+  await window.ceramic.setDIDProvider(didProvider)
   window.did = did
   console.log('Connected with DID:', did.id)
 
