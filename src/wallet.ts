@@ -32,6 +32,6 @@ export const web3Modal = new Web3Modal({
 
 export async function getAuthProvider(): Promise<EthereumAuthProvider> {
   const ethProvider = await web3Modal.connect()
-  const addresses = await ethProvider.send('eth_requestAccounts')
+  const addresses = await ethProvider.enable()
   return new EthereumAuthProvider(ethProvider, addresses[0])
 }
