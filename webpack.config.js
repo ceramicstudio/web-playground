@@ -1,37 +1,31 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = {
-  entry: './example/app.js',
+  mode: 'production',
+  entry: './src/app.ts',
   output: {
     filename: 'build.js',
-    path: path.resolve(__dirname, './'),
+    path: path.resolve(__dirname, './dist'),
     libraryTarget: 'umd',
-    umdNamedDefine: true
+    umdNamedDefine: true,
+  },
+  resolve: {
+    extensions: ['.ts', '.js'],
   },
   module: {
-    rules: [{
-        test: /\.js$/,
-        exclude: /(node_modules)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env', "@babel/preset-react"],
-            plugins: [
-              ['@babel/plugin-transform-runtime', {
-                'regenerator': true
-              }],
-              ['@babel/plugin-proposal-object-rest-spread']
-            ]
-          }
-        }
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
       },
-    ]
+    ],
   },
   node: {
     console: false,
     fs: 'empty',
     net: 'empty',
     tls: 'empty',
-    child_process: 'empty'
-  }
-};
+    child_process: 'empty',
+  },
+}
