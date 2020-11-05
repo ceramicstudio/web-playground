@@ -2,9 +2,12 @@ const path = require('path')
 
 module.exports = {
   mode: 'production',
-  entry: './src/app.ts',
+  entry: {
+    app: './src/app.ts',
+    skydb: './src/skydb.ts',
+  },
   output: {
-    filename: 'build.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, './dist'),
     libraryTarget: 'umd',
     umdNamedDefine: true,

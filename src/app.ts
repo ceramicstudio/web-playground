@@ -14,7 +14,7 @@ const ceramicPromise = createCeramic()
 
 const authenticate = async (): Promise<string> => {
   const [authProvider, ceramic] = await Promise.all([getAuthProvider(), ceramicPromise])
-  const idx = await createIDX(ceramic, authProvider)
+  const idx = await createIDX(ceramic, { authProvider })
   // @ts-ignore DID type mismatch
   window.did = idx.did
   return idx.id
