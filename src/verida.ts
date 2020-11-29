@@ -91,6 +91,12 @@ const authenticate = async (): Promise<void> => {
   console.log(
     'You can then run `await testDb.getMany()` to load the saved data'
   )
+  console.log(
+    '---'
+  )
+  console.log(
+    'Learn more about creating permissioned databases, datastores, schemas, messaging etc. in the Verida documentation: https://docs.datastore.verida.io/'
+  )
 }
 
 document.getElementById('bauth')?.addEventListener('click', () => {
