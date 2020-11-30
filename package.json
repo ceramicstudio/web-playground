@@ -21,6 +21,8 @@
     "@ceramicnetwork/key-did-resolver": "^0.1.2",
     "@ceramicstudio/idx-tools": "^0.3.1",
     "@ceramicstudio/idx-web": "^0.2.0",
+    "@verida/datastore": "^0.6.3",
+    "@verida/wallet-utils": "^1.2.0",
     "@walletconnect/web3-provider": "^1.3.1",
     "authereum": "^0.1.0",
     "dag-jose": "^0.3.0",
