@@ -1,5 +1,5 @@
-// import Ceramic from '@ceramicnetwork/ceramic-core'
-import Ceramic from '@ceramicnetwork/ceramic-http-client'
+import type { CeramicApi } from '@ceramicnetwork/common'
+import Ceramic from '@ceramicnetwork/http-client'
 // import dagJose from 'dag-jose'
 // import IPFS from 'ipfs'
 // @ts-ignore
@@ -14,16 +14,17 @@ import Ceramic from '@ceramicnetwork/ceramic-http-client'
 
 declare global {
   interface Window {
-    ceramic?: Ceramic
+    ceramic?: CeramicApi
     // ipfs?: typeof IPFS
   }
 }
 
-export async function createCeramic(): Promise<Ceramic> {
+export async function createCeramic(): Promise<CeramicApi> {
   // @ts-ignore
   // window.ipfs = await IPFS.create({ ipld: { formats: [dagJoseFormat] } })
   // window.ceramic = await Ceramic.create(window.ipfs)
-  // return window.ceramic
-  window.ceramic = new Ceramic('https://ceramic.3boxlabs.com')
-  return Promise.resolve(window.ceramic)
+  const ceramic = new Ceramic('https://ceramic-dev.3boxlabs.com')
+  window.ceramic = ceramic
+  // @ts-ignore Ceramic type
+  return Promise.resolve(ceramic as CeramicApi)
 }

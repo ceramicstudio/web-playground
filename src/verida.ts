@@ -9,7 +9,7 @@ import { fromString, toString } from 'uint8arrays'
 
 import { createCeramic } from './ceramic'
 import { createIDX } from './idx'
-import { getAuthProvider } from './wallet'
+import { getProvider } from './wallet'
 
 declare global {
   interface Window {
@@ -28,24 +28,25 @@ const VeridaSchema = {
 const authenticate = async (): Promise<void> => {
   console.log('Authenticating...')
 
-  const [authProvider, ceramic] = await Promise.all([getAuthProvider(), ceramicPromise])
-  const idx = await createIDX(ceramic, { authProvider })
+  const [ceramic, provider] = await Promise.all([ceramicPromise, getProvider()])
+  await ceramic.setDIDProvider(provider)
+  const idx = createIDX(ceramic)
 
   window.did = idx.did
   console.log('Authenticated with DID:', idx.id)
 
   console.log('Creating IDX setup...')
   // @ts-ignore
-  const schemaID = await publishSchema(ceramic, { content: VeridaSchema })
-  const definitionID = await createDefinition(ceramic, {
+  const schema = await publishSchema(ceramic, { content: VeridaSchema })
+  const definition = await createDefinition(ceramic, {
     name: 'Ethereum key',
     description: 'Ethereum key for connecting to Verida applications',
-    schema: schemaID.toUrl('base36'),
+    schema: schema.versionId.toUrl(),
   })
-  const seedKey = definitionID.toString()
+  const seedKey = definition.id.toString()
   console.log('IDX setup created with definition ID:', seedKey)
 
-  const createWallet = async (): Promise<object> => {
+  const createWallet = async (): Promise<any> => {
     const wallet = WalletUtils.createWallet('ethr')
     const jwe = await idx.did.createJWE(fromString(JSON.stringify(wallet)), [idx.id])
     await idx.set(seedKey, jwe)
@@ -65,7 +66,7 @@ const authenticate = async (): Promise<void> => {
       appName: appName,
       chain: wallet.chain,
       address: wallet.address,
-      privateKey: wallet.privateKey
+      privateKey: wallet.privateKey,
     })
     return app
   }
@@ -79,21 +80,15 @@ const authenticate = async (): Promise<void> => {
   console.log(
     'You can then run `verida = await getVerida("My application name")` to retrieve the saved Ethereum wallet and create a new Verida application instance for the given application name'
   )
-  console.log(
-    'Run `await verida.connect()` to initialize the Verida application instance'
-  )
+  console.log('Run `await verida.connect()` to initialize the Verida application instance')
   console.log(
     'Run `testDb = await verida.openDatabase("myEncryptedDatabase")` to open an encrypted database'
   )
   console.log(
     'Run `await testDb.save({hello: "Verida with IDX"})` to save data in your encrypted test database'
   )
-  console.log(
-    'You can then run `await testDb.getMany()` to load the saved data'
-  )
-  console.log(
-    '---'
-  )
+  console.log('You can then run `await testDb.getMany()` to load the saved data')
+  console.log('---')
   console.log(
     'Learn more about creating permissioned databases, datastores, schemas, messaging etc. in the Verida documentation: https://docs.datastore.verida.io/'
   )

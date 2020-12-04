@@ -2,7 +2,7 @@ import type { DID } from 'dids'
 
 import { createCeramic } from './ceramic'
 import { createIDX } from './idx'
-import { getAuthProvider } from './wallet'
+import { getProvider } from './wallet'
 
 declare global {
   interface Window {
@@ -13,9 +13,9 @@ declare global {
 const ceramicPromise = createCeramic()
 
 const authenticate = async (): Promise<string> => {
-  const [authProvider, ceramic] = await Promise.all([getAuthProvider(), ceramicPromise])
-  const idx = await createIDX(ceramic, { authProvider })
-  // @ts-ignore DID type mismatch
+  const [ceramic, provider] = await Promise.all([ceramicPromise, getProvider()])
+  await ceramic.setDIDProvider(provider)
+  const idx = createIDX(ceramic)
   window.did = idx.did
   return idx.id
 }

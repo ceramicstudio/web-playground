@@ -1,11 +1,12 @@
 import WalletConnectProvider from '@walletconnect/web3-provider'
-// @ts-ignore
 import { ThreeIdConnect, EthereumAuthProvider } from '3id-connect'
 import Authereum from 'authereum'
+import type { DIDProvider } from 'dids'
 import Fortmatic from 'fortmatic'
 import Web3Modal from 'web3modal'
 
-export const wallet = new ThreeIdConnect()
+// @ts-ignore
+export const threeID = new ThreeIdConnect()
 
 export const web3Modal = new Web3Modal({
   network: 'mainnet',
@@ -30,8 +31,9 @@ export const web3Modal = new Web3Modal({
   },
 })
 
-export async function getAuthProvider(): Promise<EthereumAuthProvider> {
+export async function getProvider(): Promise<DIDProvider> {
   const ethProvider = await web3Modal.connect()
   const addresses = await ethProvider.enable()
-  return new EthereumAuthProvider(ethProvider, addresses[0])
+  await threeID.connect(new EthereumAuthProvider(ethProvider, addresses[0]))
+  return threeID.getDidProvider()
 }
