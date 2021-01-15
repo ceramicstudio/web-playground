@@ -33,7 +33,7 @@ const authenticate = async (): Promise<void> => {
   await ceramic.setDIDProvider(provider)
   const idx = createIDX(ceramic)
 
-  window.did = idx.did
+  window.did = ceramic.did
   console.log('Authenticated with DID:', idx.id)
 
   console.log('Creating IDX setup...')
@@ -42,13 +42,13 @@ const authenticate = async (): Promise<void> => {
   const definition = await createDefinition(ceramic, {
     name: 'SkyDB',
     description: 'SkyDB seed',
-    schema: schema.versionId.toUrl(),
+    schema: schema.commitId.toUrl(),
   })
   const seedKey = definition.id.toString()
   console.log('IDX setup created with definition ID:', seedKey)
 
   const createKeyPair = async (seed: string): Promise<ReturnType<typeof genKeyPairFromSeed>> => {
-    const jwe = await idx.did.createJWE(fromString(seed), [idx.id])
+    const jwe = await ceramic.did!.createJWE(fromString(seed), [idx.id])
     await idx.set(seedKey, jwe)
     return genKeyPairFromSeed(seed)
   }
@@ -60,7 +60,7 @@ const authenticate = async (): Promise<void> => {
     if (jwe == null) {
       return null
     }
-    const decrypted = await idx.did.decryptJWE(jwe)
+    const decrypted = await ceramic.did!.decryptJWE(jwe)
     return genKeyPairFromSeed(toString(decrypted))
   }
   // @ts-ignore

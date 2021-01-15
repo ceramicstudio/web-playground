@@ -16,7 +16,7 @@ const authenticate = async (): Promise<string> => {
   const [ceramic, provider] = await Promise.all([ceramicPromise, getProvider()])
   await ceramic.setDIDProvider(provider)
   const idx = createIDX(ceramic)
-  window.did = idx.did
+  window.did = ceramic.did
   return idx.id
 }
 

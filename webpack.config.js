@@ -5,7 +5,6 @@ module.exports = {
   entry: {
     app: './src/app.ts',
     skydb: './src/skydb.ts',
-    verida: './src/verida.ts',
   },
   output: {
     filename: '[name].js',
