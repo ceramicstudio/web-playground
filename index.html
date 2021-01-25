@@ -12,10 +12,14 @@
       body {
         background-color: #f7f7f9;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         height: 100vh;
-        overflow: scroll;
+        overflow: auto;
+      }
+
+      header {
         text-align: center;
         padding-top: 100px;
       }
@@ -26,22 +30,26 @@
             
       h3 {
         font-size: 1.5rem;
+        margin-left: 40px;
       }
       
       p {
-        font-size: 1rem;
+        font-size: 1.2rem;
+      }
+
+      main {
+        max-width: 600px;
       }
     </style>
   </head>
 
   <body>
     <div id="root"></div>
-    <div>
+    <header>
       <h1>Ceramic Web Playground</h1>
       <p>Test the full stack of <a href="https://ceramic.network" target="_blank">Ceramic Network</a> components in a web browser.</p>
-    </div>
-    <button id="bauth" type="button" class="btn btn-primary" style="margin: 50px 100px;">Connect wallet</button>
-    <div>
+    </header>
+    <main>
       <h3>Technologies</h3>
       <ul>
         <li><a href="https://developers.ceramic.network/reference/javascript/clients/#http-client" target="_blank">Ceramic HTTP Client</a>: Provides access to the Ceramic Network via a remote node running Ceramic (and IPFS).</li>
@@ -56,9 +64,9 @@
         <li>Wait to see "Connected with DID" in your console</li>
         <li><a href="https://developers.ceramic.network/build/writes/" target="_blank">Write</a> and <a href="https://developers.ceramic.network/build/queries/" target="_blank">read</a> documents on the Ceramic Network from the console using the referenced API methods</li>
         <li><a href="https://developers.idx.xyz/build/writing/" target="_blank">Write</a> and <a href="https://developers.idx.xyz/build/reading/" target="_blank">read</a> records on IDX from the console using the referenced API methods</li>
-        <li>Don't forget to console.log your outputs</li>
       </ol>
-    </div>
+    </main>
+    <button id="bauth" type="button" class="btn btn-primary" style="margin: 50px 100px;">Connect wallet</button>
   </body>
   <script type="text/javascript" src="dist/app.js"></script>
 </html>
