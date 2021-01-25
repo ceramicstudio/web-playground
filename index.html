@@ -4,25 +4,69 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Web Playground</title>
-    <meta name="description" content="">
+    <title>Ceramic Web Playground</title>
+    <meta name="description" content="Test the full stack of Ceramic Network components in a web browser.">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <style>
       body {
         background-color: #f7f7f9;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         height: 100vh;
+        overflow: auto;
+      }
+
+      header {
+        text-align: center;
+        padding-top: 100px;
+      }
+      
+      h1 {
+        font-size: 2rem;
+      }
+            
+      h3 {
+        font-size: 1.5rem;
+        margin-left: 40px;
+      }
+      
+      p {
+        font-size: 1.2rem;
+      }
+
+      main {
+        max-width: 600px;
       }
     </style>
   </head>
 
   <body>
     <div id="root"></div>
-    <button id="bauth" type="button" class="btn btn-primary" style="margin: 50px 100px;">Connect</button>
+    <header>
+      <h1>Ceramic Web Playground</h1>
+      <p>Test the full stack of <a href="https://ceramic.network" target="_blank">Ceramic Network</a> components in a web browser.</p>
+    </header>
+    <main>
+      <h3>Technologies</h3>
+      <ul>
+        <li><a href="https://developers.ceramic.network/reference/javascript/clients/#http-client" target="_blank">Ceramic HTTP Client</a>: Provides access to the Ceramic Network via a remote node running Ceramic (and IPFS).</li>
+        <li><a href="https://developers.ceramic.network/build/authentication/#did-provider-or-wallet" target="_blank">3ID Connect</a>: Provides authentication to a DID (used by Ceramic) from a blockchain wallet, and stores a link from this blockchain account to your DID in IDX.</li>
+        <li><a href="https://idx.xyz" target="_blank">IDX</a>: Provides a way to create identity records for a DID. Records are stored on Ceramic and can represent links to blockchain accounts or other user data.</li>
+      </ul>
+      <h3>Usage</h3>
+      <ol>
+        <li>Open your console by inspecting the page</li>
+        <li>Authenticate by clicking "Connect wallet"</li>
+        <li>Approve prompts in your Web3 wallet</li>
+        <li>Wait to see "Connected with DID" in your console</li>
+        <li><a href="https://developers.ceramic.network/build/writes/" target="_blank">Write</a> and <a href="https://developers.ceramic.network/build/queries/" target="_blank">read</a> documents on the Ceramic Network from the console using the referenced API methods</li>
+        <li><a href="https://developers.idx.xyz/build/writing/" target="_blank">Write</a> and <a href="https://developers.idx.xyz/build/reading/" target="_blank">read</a> records on IDX from the console using the referenced API methods</li>
+      </ol>
+    </main>
+    <button id="bauth" type="button" class="btn btn-primary" style="margin: 50px 100px;">Connect wallet</button>
   </body>
-
   <script type="text/javascript" src="dist/app.js"></script>
 </html>
