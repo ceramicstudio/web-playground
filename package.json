@@ -14,6 +14,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
+    "@ceramicnetwork/3id-did-resolver": "^1.2.0",
     "@ceramicnetwork/common": "^1.0.0",
     "@ceramicnetwork/http-client": "^1.0.0",
     "@ceramicstudio/idx": "^0.11.0",
@@ -23,7 +24,9 @@
     "authereum": "^0.1.0",
     "dag-jose": "^0.3.0",
     "dids": "^2.1.0",
+    "did-resolver": "^3.1.0",
     "fortmatic": "^2.2.1",
+    "key-did-resolver": "^1.2.0",
     "multiformats": "~4.6.1",
     "skynet-js": "^4.0.5-beta",
     "uint8arrays": "^2.1.5",
