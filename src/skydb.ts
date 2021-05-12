@@ -2,7 +2,6 @@ import { createDefinition, publishSchema } from '@ceramicstudio/idx-tools'
 import type { JWE } from 'did-jwt'
 import type { DID } from 'dids'
 import { SkynetClient, genKeyPairFromSeed } from 'skynet-js'
-// @ts-ignore
 import { fromString, toString } from 'uint8arrays'
 
 import { createCeramic } from './ceramic'

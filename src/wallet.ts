@@ -1,5 +1,5 @@
 import WalletConnectProvider from '@walletconnect/web3-provider'
-import { ThreeIdConnect, EthereumAuthProvider } from '3id-connect'
+import { ThreeIdConnect, EthereumAuthProvider } from '@3id/connect'
 import Authereum from 'authereum'
 import type { DIDProvider } from 'dids'
 import Fortmatic from 'fortmatic'
