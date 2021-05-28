@@ -121,3 +121,40 @@ document.getElementById('publish')?.addEventListener('click', () => {
 //
 //         return true;
 //     }
+
+// store is the buttonId
+document.getElementById('store')?.addEventListener('click', () => {
+  // Replace { hello: 'world' } with JSON-LD content
+  window.TileDocument.create(window.ceramic, { hello: 'world' }).then((res: any) =>
+    console.log(res.commitId.toString())
+  )
+})
+
+
+/*
+// getContent is the buttonId
+document.getElementById('getContent')?.addEventListener('click', () => {
+  const pid = (<HTMLInputElement>document.getElementById('pid'))?.value
+  console.log(pid)
+
+  //window.ceramic?.loadStream(pid).then((_content) => console.log(_content))
+  window.ceramic
+    ?.loadStream(pid)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    .then((_content) => (document.getElementById('update')!.value = _content.state.content))
+})
+*/
+
+/*
+// THIS DOESN'T WORK YET
+document.getElementById('update')?.addEventListener('click', () => {
+  ;async () => {
+    const pid = (<HTMLInputElement>document.getElementById('pid'))?.value
+    const content = (<HTMLTextAreaElement>document.getElementById('oldContent'))?.value
+
+    const doc = await window.ceramic?.loadStream(pid)
+    
+    const newDoc = await doc.update(content)
+  }
+})
+*/
