@@ -67,3 +67,11 @@ document.getElementById('upload')?.addEventListener('click', () => {
     }
   )
 })
+
+document.getElementById("<buttonId>")?.addEventListener('click', () => {
+  
+  // Replace { hello: 'world' } with JSON-LD content
+  window.TileDocument.create(window.ceramic, { hello: 'world' }).then((res: any) =>
+    console.log(res.commitId.toString())
+  )
+})
