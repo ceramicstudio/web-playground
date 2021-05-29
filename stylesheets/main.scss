@@ -4,12 +4,12 @@
 @import '_button.scss';
 @import '_layout.scss';
 @import '_header.scss';
-
+@import '_create.scss';
 
 main {
   display : flex;
   flex-direction: column;
-  padding-top: 3rem;
+  padding-top: 2rem;
 }
 
 
