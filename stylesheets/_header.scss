@@ -1,0 +1,46 @@
+header {
+
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  @media (min-width: $breakpoint-sm) {
+    padding: 3rem 0;
+  }
+
+  .container, .small-container {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    > div {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+
+      > button {
+        text-align: right;
+      }
+    }
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+
+    > li {
+      margin: .25rem 1.5rem;
+      padding: .5rem 1rem;
+
+      &:last-of-type {
+        margin-right: 0;
+        padding-right: 0;
+      }
+    }
+  }
+
+
+}
