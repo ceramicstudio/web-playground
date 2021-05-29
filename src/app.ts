@@ -6,12 +6,17 @@ import { createCeramic } from './ceramic'
 import { createIDX } from './idx'
 import { getProvider } from './wallet'
 import type { ResolverRegistry } from 'did-resolver'
+import { NFTStorage } from 'nft.storage'
 
 declare global {
   interface Window {
     did?: DID
   }
 }
+
+// Replace the hardcoded value, does not work with env yet
+const nftStorageApiKey = process.env.NFT_STORAGE_API_KEY || 'NFT_STORAGE_API_KEY'
+const nftStorageClient = new NFTStorage({ token: nftStorageApiKey })
 
 const ceramicPromise = createCeramic()
 
@@ -41,6 +46,19 @@ document.getElementById('bauth')?.addEventListener('click', () => {
     },
     (err) => {
       console.error('Failed to authenticate:', err)
+    }
+  )
+})
+
+document.getElementById('upload')?.addEventListener('click', () => {
+  const files: any = (<HTMLInputElement>document.getElementById('myFile'))?.files
+  const myFile = files && files[0];
+  nftStorageClient.storeBlob(myFile).then(
+    (cid) => {
+      console.log('CID:', cid)
+    },
+    (err) => {
+      console.error('Failed to upload:', err)
     }
   )
 })

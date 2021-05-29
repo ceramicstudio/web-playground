@@ -28,6 +28,7 @@
     "fortmatic": "^2.2.1",
     "key-did-resolver": "^1.2.0",
     "multiformats": "~4.6.1",
+    "nft.storage": "^1.4.0",
     "skynet-js": "^4.0.5-beta",
     "uint8arrays": "^2.1.5",
     "web3modal": "^1.9.3"
