@@ -14,8 +14,12 @@ declare global {
   }
 }
 
+// global variables to be hydrated and published
+let cid = '' // document.getElementById("myCid").value
+let publicationType = '' // document.getElementById("publicationType").value
+
 // Replace the hardcoded value, does not work with env yet
-const nftStorageApiKey = process.env.NFT_STORAGE_API_KEY || 'NFT_STORAGE_API_KEY'
+const nftStorageApiKey = process.env.NFT_STORAGE_API_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDUyZTA5ZTRBNEFBODVkQjMxMTZENjM3Y0Y4ZjhlODU5ZEVkRGExOTQiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTYyMjI0ODQ0NDk4OSwibmFtZSI6Im9wZW4tcGlkIn0.GtHzC6K9f4yiErBYPoNUcS0EgKV6v8El7NWlwmj05Xc'
 const nftStorageClient = new NFTStorage({ token: nftStorageApiKey })
 
 const ceramicPromise = createCeramic()
@@ -54,8 +58,9 @@ document.getElementById('upload')?.addEventListener('click', () => {
   const files: any = (<HTMLInputElement>document.getElementById('myFile'))?.files
   const myFile = files && files[0];
   nftStorageClient.storeBlob(myFile).then(
-    (cid) => {
-      console.log('CID:', cid)
+    (_cid) => {
+      console.log('CID:', _cid)
+      cid = _cid;
     },
     (err) => {
       console.error('Failed to upload:', err)
