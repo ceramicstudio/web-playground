@@ -1,80 +1,124 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Open PID Client</title>
-    <meta name="description" content="Test the full stack of Ceramic Network components in a web browser.">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <style>
-      body {
-        background-color: #f7f7f9;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        overflow: auto;
-      }
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Open PID Client</title>
+  <meta name="description" content="Test the full stack of Ceramic Network components in a web browser.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f7f7f9;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: auto;
+    }
 
-      header {
-        text-align: center;
-        padding-top: 100px;
-      }
-      
-      h1 {
-        font-size: 2rem;
-      }
-            
-      h3 {
-        font-size: 1.5rem;
-        margin-left: 40px;
-      }
-      
-      p {
-        font-size: 1.2rem;
-      }
+    header {
+      text-align: center;
+      padding-top: 100px;
+    }
 
-      main {
-        max-width: 600px;
-      }
-      
-      .logo {
-        height: 125px;
-        width: 125px;
-        margin-right: auto;
-        margin-left: auto;
-      }
-    </style>
-  </head>
+    h1 {
+      font-size: 2rem;
+    }
 
-  <body>
-    <div id="root"></div>
-    <header>
-      <div>
-        <img id="logo" src="images/openpid.png" alt="">
+    h3 {
+      font-size: 1.5rem;
+      margin-left: 40px;
+    }
+
+    p {
+      font-size: 1.2rem;
+    }
+
+    main {
+      max-width: 600px;
+    }
+
+    .logo {
+      height: 125px;
+      width: 125px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      var max_fields = 10;
+      var wrapper = $(".container1");
+      var add_button = $(".add_form_field");
+
+      var x = 1;
+      $(add_button).click(function (e) {
+        e.preventDefault();
+        if (x < max_fields) {
+          x++;
+          $(wrapper).append(
+            '<div id="author">ORCID or similar PID<input type="text" name="pid[]"><br/>or Name <input type="text" name="name[]">and Organization <input type="text" name="organization[]"><a href="#" class="delete">Delete</a></div>'
+          ); //add input box
+        }
+        else {
+          alert('You Reached the limits')
+        }
+      });
+
+      $(wrapper).on("click", ".delete", function (e) {
+        e.preventDefault(); $(this).parent('div').remove(); x--;
+      })
+    });
+  </script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <header>
+    <div>
+      <img id="logo" src="images/openpid.png" alt="">
+    </div>
+  </header>
+  <main>
+    <label for="myFile">Upload a file</label>
+    <input id="myFile" type="file" />
+    <button id="upload" type="button" class="btn btn-primary">Upload 🚀</button>
+
+    <label for="myCid">or Enter CID</label>
+    <input type="text" id="myCid">
+
+    <br/>
+
+    <label for="publicationType">Select type:</label>
+    <select name="publicationType" id="publicationType">
+      <option value="sa">Scholarly Article</option>
+      <option value="io">Image Object</option>
+      <option value="ms">Medical Study</option>
+    </select>
+
+    <br/>
+    <label for="authors">Authors:</label>
+    <div class="container1">
+      <button class="add_form_field">Add New &nbsp; <span style="font-size:16px; font-weight:bold;">+ </span></button>
+      <div id="author">
+        ORCID or similar PID
+        <input type="text" name="pid[]">
+        <br/>
+        or Name <input type="text" name="name[]"> 
+        and Organization <input type="text" name="organization[]">
       </div>
-    </header>
-    <main>
-      <label for="myFile">Upload a file</label>
-      <input id="myFile" type="file" />
-      <button id="upload" type="button" class="btn btn-primary">Upload 🚀</button>
+    </div>
 
-      <label for="myCid">or Enter CID</label>
-      <input type="text" id="myCid">
+    <button id="publish" type="button" class="btn btn-success" style="margin: 50px 100px;">Publish</button>
 
-      <br/>
+  </main>
+  <button id="bauth" type="button" class="btn btn-primary" style="margin: 50px 100px;">Connect wallet</button>
+</body>
+<script type="text/javascript" src="dist/app.js"></script>
 
-      <label for="publicationType">Select type:</label>
-      <select name="publicationType" id="publicationType">
-        <option value="sa">Scholarly Article</option>
-        <option value="io">Image Object</option>
-        <option value="ms">Medical Study</option>
-      </select>
-    </main>
-    <button id="bauth" type="button" class="btn btn-primary" style="margin: 50px 100px;">Connect wallet</button>
-  </body>
-  <script type="text/javascript" src="dist/app.js"></script>
 </html>
