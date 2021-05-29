@@ -12,7 +12,8 @@
   "scripts": {
     "build": "webpack",
     "lint": "eslint src",
-    "serve": "serve ."
+    "serve": "serve .",
+    "style": "gulp scss-compile"
   },
   "dependencies": {
     "@3id/connect": "^0.1.4",
@@ -34,10 +35,17 @@
     "web3modal": "^1.9.3"
   },
   "devDependencies": {
+    "cssnano": "^3.10.0",
     "did-jwt": "^5.2.0",
     "did-resolver": "^3.0.1",
     "eslint": "^7.25.0",
     "eslint-config-3box": "^0.2.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-postcss": "^7.0.1",
+    "gulp-sass": "^3.2.1",
+    "node-sass": "^4.14.1",
+    "postcss": "^8.2.1",
     "prettier": "^2.2.1",
     "serve": "^11.3.2",
     "ts-loader": "^8.2.0",
