@@ -64,16 +64,18 @@
 
     <div class="small-container">
 
-      <section>
-    <h2>Create PID</h2>
 
-      <p>Lorem ipsum</p>
+
+      <section>
+        <h2>Create PID</h2>
+
+          <p>Lorem ipsum</p>
       </section>
 
     <form id="create-pid">
     <section>
       <span class="number">1</span>
-      <h3>File upload</h3>
+      <h3>Upload your content</h3>
       <label for="myFile" class="hidden">Upload a file</label>
       <input id="myFile" type="file" />
       <button id="upload" type="button" class="btn btn-primary">Upload 🚀</button>
@@ -82,9 +84,17 @@
       <input type="text" id="myCid">
     </section>
 
+      <section>
+        <span class="number">2</span>
+        <h3>Select your domain</h3>
+        <label for="myDomain" class="hidden">Use ENS Domain: </label>
+        <input type="text" id="myDomain">
+
+      </section>
+
     <section>
-      <span class="number">2</span>
-      <h3>Type of publication</h3>
+      <span class="number">3</span>
+      <h3>Create metadata</h3>
     <label for="publicationType" class="hidden">Select type:</label>
     <select name="publicationType" id="publicationType">
       <option value="book">Book</option>
@@ -94,11 +104,7 @@
       <option value="medicalStudy">Medical Study</option>
     </select>
 
-    </section>
-
-    <section>
-      <span class="number">3</span>
-      <h3>Auhors</h3>
+      <h4>Authors</h4>
     <label for="authors" class="hidden">Authors:</label>
     <div class="container1">
       <div id="author" name="author">
@@ -111,23 +117,25 @@
       <button class="add_form_field">Add New &nbsp; <span style="font-size:16px; font-weight:bold;">+ </span></button>
     </div>
 
-    </section>
-
-    <section>
-      <h3>Metadata</h3>
-      <span class="number">4</span>
-    <label for="myDescription">Description:</label>
+      <h4>Description</h4>
+    <label for="myDescription" class="hidden">Description:</label>
     <textarea name="myDescription" id="myDescription"></textarea>
 
-    <br/>
     <label for="myPid">Choose a PID:</label>
     <input title="Ideally a unique short identifier" type="text" id="myPid">
 
     </section>
 
     <section>
+      <span class="number">4</span>
+      <h3>Register PID</h3>
+    </section>
 
-    <button id="publish" class="magenta" type="button" class="btn btn-success">Publish</button>
+    <section>
+      <span class="number">5</span>
+      <h3>Publish metadata</h3>
+
+      <button id="publish"  type="button" class="btn btn-success">Publish</button>
 
     </section>
   </form>
