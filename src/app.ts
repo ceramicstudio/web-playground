@@ -4,21 +4,17 @@ import KeyDidResolver from 'key-did-resolver'
 
 import { createCeramic } from './ceramic'
 import { createIDX } from './idx'
-import { getProvider } from './wallet'
+import { getProvider, web3Modal } from './wallet'
 import type { ResolverRegistry } from 'did-resolver'
 import { NFTStorage } from 'nft.storage'
-// import ENS, { getEnsAddress } from '@ensdomains/ensjs'
-
+import {CreativeWork, Person, Organization, Book, MedicalStudy, SoftwareApplication, ScholarlyArticle, WithContext} from 'schema-dts';
+import { concat } from 'uint8arrays'
+import ENS from '@ensdomains/ensjs'
+import { ethers } from 'ethers'
 declare global {
   interface Window {
     did?: DID
   }
-}
-
-interface Author {
-  pid?: string
-  name?: string
-  organization?: string
 }
 
 // global variables to be hydrated and published
@@ -86,18 +82,24 @@ document.getElementById('publish')?.addEventListener('click', () => {
   const authors: any = []
   // loop through author inputs and build the authors array
   document.getElementsByName('author')?.forEach((e1: any) => {
-    const author: Author = {}
+    const author: WithContext<Person> = {
+      '@context': 'https://schema.org',
+      '@type': 'Person'}
     e1.childNodes.forEach((e2: any) => {
       if (e2.name === 'pid[]' && e2.value !== '') {
-        author.pid = e2.value
+        author['@id'] = e2.value
       }
       if (e2.name === 'name[]' && e2.value !== '') {
         author.name = e2.value
       }
       if (e2.name === 'organization[]' && e2.value !== '') {
-        author.organization = e2.value
+        author.affiliation = {
+          '@type': 'Organization',
+          name: e2.value,
+        }
       }
     })
+    console.log(JSON.stringify(author))
     authors.push(author)
   })
   console.log('authors', authors)
@@ -110,7 +112,53 @@ document.getElementById('publish')?.addEventListener('click', () => {
 
   const type = (<HTMLInputElement>document.getElementById('publicationType'))?.value
   console.log('type', type)
-  // TODO build JSON-LD based on the schema of the selected type
+
+
+const doc: WithContext<Book> = {
+  '@context': 'https://schema.org',
+  '@type': 'Book',
+  '@id': 'https://openpid.org/' + pid,
+  author : authors
+};
+console.log(JSON.stringify(doc))
+})
+
+
+document.getElementById('register-pid')?.addEventListener('click', async () => {
+  const type = (<HTMLInputElement>document.getElementById('publicationType'))?.value
+  const identifyer = type + getRandomInt2String(10000)
+  const ens_domain = (<HTMLInputElement>document.getElementById('myDomain'))?.value
+  console.log(ens_domain)
+  console.log(identifyer)
+
+
+  web3Modal.clearCachedProvider();
+  const externalProvider = await web3Modal.connect();
+  const myProvider = new ethers.providers.Web3Provider(externalProvider);
+
+  // console.log(ethProvider)
+  //const myprovider = await connectWeb3()
+  // const myprovider = ethProvider
+  //console.log(myprovider)
+  const ensAddress = '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e'
+  const ens = new ENS({ myProvider, ensAddress })
+  const ENSName = ens.name(ens_domain)
+  // create subdomain
+  const subdomain_tx = await ENSName.createSubdomain(identifyer)
+
+
+  const ens_sub = new ENS({ myProvider, ensAddress })
+
+  const ENSSubName = ens_sub.name(identifyer + '.' + ens_domain)
+  const ipfs_cid = 'QmWfVY9y3xjsixTgbd9AorQxH7VtMpzfx2HaWtsoUYecaX'
+  const ipfs_path = `ipfs://${ipfs_cid}`
+  const ctx_tx = await ENSSubName.setContenthash(ipfs_path)
+  await ctx_tx.wait()
+  const url_tx = await ENSSubName.setText('url', 'http:/openpid/' + identifyer + '.' + ens_domain)
+  await url_tx.wait()
+  console.log('url_tx')
+  console.log(url_tx)
+
 })
 
 // function registerOnENS async (ens_domain: string, identifyer: string) {
@@ -131,6 +179,12 @@ document.getElementById('store')?.addEventListener('click', () => {
 })
 
 
+
+function getRandomInt2String(max: number) {
+  const digits = max.toString().length
+  const number = Math.floor(Math.random() * max).toString()
+  return '0'.repeat(digits-number.length) + number
+}
 /*
 // getContent is the buttonId
 document.getElementById('getContent')?.addEventListener('click', () => {
