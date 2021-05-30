@@ -1,0 +1,305 @@
+{
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
+  "@type": "SoftwareSourceCode",
+  "identifier": "PioneerWatchfulWaiting",
+  "description": "Describe the baseline demographic, clinical characteristics, treatments and outcomes of interest among individuals with PCa.",
+  "name": "PioneerWatchfulWaiting: PIONEER / EHDEN / OHDSI prostate cancer study",
+  "codeRepository": "https://github.com/ohdsi-studies/PioneerWatchfulWaiting",
+  "issueTracker": "https://github.com/ohdsi-studies/PioneerWatchfulWaiting/issues",
+  "license": "https://spdx.org/licenses/Apache-2.0",
+  "version": "0.3.3",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "url": "https://r-project.org"
+  },
+  "runtimePlatform": "R version 4.0.4 (2021-02-15)",
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "Anthony G.",
+      "familyName": "Sena",
+      "email": "asena5@its.jnj.com"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Artem",
+      "familyName": "Gorbachev",
+      "email": "artem.gorbachev@odysseusinc.com"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Kees",
+      "familyName": "van Bochove",
+      "email": "kees@thehyve.nl",
+      "@id": "https://orcid.org/0000-0002-8589-0609"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Bertrand",
+      "familyName": "de Meulder"
+    }
+  ],
+  "contributor": {},
+  "copyrightHolder": [
+    {
+      "@type": "Organization",
+      "name": "Observational Health Data Science and Informatics"
+    }
+  ],
+  "funder": [
+    {
+      "@type": "Organization",
+      "name": "IMI2 PIONEER"
+    },
+    {
+      "@type": "Organization",
+      "name": "IMI2 EHDEN"
+    }
+  ],
+  "maintainer": [
+    {
+      "@type": "Person",
+      "givenName": "Kees",
+      "familyName": "van Bochove",
+      "email": "kees@thehyve.nl",
+      "@id": "https://orcid.org/0000-0002-8589-0609"
+    }
+  ],
+  "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "knitr",
+      "name": "knitr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=knitr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rmarkdown",
+      "name": "rmarkdown",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
+    }
+  ],
+  "softwareRequirements": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "DatabaseConnector",
+      "name": "DatabaseConnector",
+      "version": ">= 2.2.0",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=DatabaseConnector"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "CohortDiagnostics",
+      "name": "CohortDiagnostics",
+      "version": ">= 1.2.2",
+      "sameAs": "https://github.com/OHDSI/CohortDiagnostics"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "FeatureExtraction",
+      "name": "FeatureExtraction",
+      "version": ">= 3.1.0",
+      "sameAs": "https://github.com/OHDSI/FeatureExtraction"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "ParallelLogger",
+      "name": "ParallelLogger",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://github.com/OHDSI/ParallelLogger"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "OhdsiSharing",
+      "name": "OhdsiSharing",
+      "version": ">= 0.2.1",
+      "sameAs": "https://github.com/OHDSI/OhdsiSharing"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "SqlRender",
+      "name": "SqlRender",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://github.com/OHDSI/SqlRender"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "ff",
+      "name": "ff",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=ff"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "magrittr",
+      "name": "magrittr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=magrittr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "digest",
+      "name": "digest",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=digest"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "readr",
+      "name": "readr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=readr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "dplyr",
+      "name": "dplyr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=dplyr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "ggplot2",
+      "name": "ggplot2",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=ggplot2"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "tibble",
+      "name": "tibble",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=tibble"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "magrittr",
+      "name": "magrittr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=magrittr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "survival",
+      "name": "survival",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=survival"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "survminer",
+      "name": "survminer",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=survminer"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "codemetar",
+      "name": "codemetar",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=codemetar"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "renv",
+      "name": "renv",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=renv"
+    }
+  ],
+  "readme": "https://github.com/ohdsi-studies/PioneerWatchfulWaiting/blob/master/README.md",
+  "fileSize": "276267.061KB",
+  "isPartOf": "https://ohdsi.org"
+}
