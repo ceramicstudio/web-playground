@@ -14,6 +14,12 @@ declare global {
   }
 }
 
+interface Author {
+  pid?: string
+  name?: string
+  organization?: string
+}
+
 // global variables to be hydrated and published
 let cid = '' // document.getElementById("myCid").value
 let publicationType = '' // document.getElementById("publicationType").value
@@ -66,4 +72,40 @@ document.getElementById('upload')?.addEventListener('click', () => {
       console.error('Failed to upload:', err)
     }
   )
+})
+
+document.getElementById('publish')?.addEventListener('click', () => {
+  if (cid === '') {
+    cid = (<HTMLInputElement>document.getElementById('myCid'))?.value
+  }
+  console.log("cid", cid);
+
+  const authors:any = [];
+  // loop through author inputs and build the authors array
+  document.getElementsByName("author")?.forEach((e1:any) => {
+    let author:Author = {};
+    e1.childNodes.forEach((e2:any) => {
+      if (e2.name === "pid[]" && e2.value !== '') {
+        author.pid = e2.value;
+      }
+      if (e2.name === "name[]" && e2.value !== '') {
+        author.name = e2.value;
+      }
+      if (e2.name === "organization[]" && e2.value !== '') {
+        author.organization = e2.value;
+      }
+    });
+    authors.push(author);
+  });
+  console.log("authors", authors);
+
+  const description = (<HTMLTextAreaElement>document.getElementById('myDescription'))?.value
+  console.log("description", description);
+
+  const pid = (<HTMLInputElement>document.getElementById('myPid'))?.value
+  console.log("pid", pid);
+
+  const type = (<HTMLInputElement>document.getElementById('publicationType'))?.value
+  console.log("type", type);
+  // TODO build JSON-LD based on the schema of the selected type
 })
