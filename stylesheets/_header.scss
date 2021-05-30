@@ -21,7 +21,8 @@ header {
       justify-content: flex-end;
 
       > button {
-        text-align: right;
+        //text-align: right;
+        align-self: flex-end;
       }
     }
   }
@@ -38,6 +39,12 @@ header {
       &:last-of-type {
         margin-right: 0;
         padding-right: 0;
+      }
+
+      a {
+        color: black;
+        text-decoration: none;
+        border-bottom: 1px solid black;
       }
     }
   }

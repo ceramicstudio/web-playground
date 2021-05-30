@@ -1,4 +1,21 @@
 input {
   line-height: 1.55;
   padding: .25rem .4rem;
+  -webkit-appearance: none;
+  border: 1px solid black;
+}
+
+textarea {
+
+  width: 100%;
+  min-height: 400px;
+}
+
+form section {
+
+
+}
+
+form .hidden {
+  display: none;
 }

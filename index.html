@@ -1,101 +1,61 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Open PID Client</title>
-  <meta name="description" content="Test the full stack of Ceramic Network components in a web browser.">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="https://cloud.typography.com/7060374/7041032/css/fonts.css" />
-  <link rel="stylesheet" href="./css/main.css">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Open PID Client</title>
+    <meta name="description" content="Test the full stack of Ceramic Network components in a web browser.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://cloud.typography.com/7060374/7041032/css/fonts.css" />
+    <link rel="stylesheet" href="./css/main.css">
+    <style>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <script>
-    $(document).ready(function () {
-      var max_fields = 10;
-      var wrapper = $(".container1");
-      var add_button = $(".add_form_field");
+    </style>
+  </head>
 
-      var x = 1;
-      $(add_button).click(function (e) {
-        e.preventDefault();
-        if (x < max_fields) {
-          x++;
-          $(wrapper).append(
-            '<div id="author">ORCID or similar PID<input type="text" name="pid[]"><br/>or Name <input type="text" name="name[]">and Organization <input type="text" name="organization[]"><a href="#" class="delete">Delete</a></div>'
-          ); //add input box
-        }
-        else {
-          alert('You Reached the limits')
-        }
-      });
+  <body>
+    <div id="root"></div>
+    <header>
+      <div class="container">
+        <h1>Open PID</h1>
 
-      $(wrapper).on("click", ".delete", function (e) {
-        e.preventDefault(); $(this).parent('div').remove(); x--;
-      })
-    });
-  </script>
-</head>
-
-<body id="create">
-  <div id="root"></div>
-  <header>
-    <div class="container">
-      <h1>Open PID</h1>
-
-      <div>
+        <div>
         <button id="bauth" type="button" class="btn btn-primary">Connect wallet</button>
         <nav>
           <ul>
-            <li><a herf="/home.html">Home</a></li>
-            <li><a herf="/index.html">Create</a></li>
-            <li><a herf="/explore.html">Explore</a></li>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/create.html">Create</a></li>
+            <li><a href="/explore.html">Explore</a></li>
           </ul>
         </nav>
 
+        </div>
       </div>
-      <!--      <div>-->
-      <!--        <img id="logo" src="images/openpid.png" alt="">-->
-      <!--      </div>-->
-    </div>
-  </header>
-  <main>
-    <label for="myFile">Upload a file</label>
-    <input id="myFile" type="file" />
-    <button id="upload" type="button" class="btn btn-primary">Upload 🚀</button>
+    </header>
+    <main>
 
-    <label for="myCid">or Enter CID</label>
-    <input type="text" id="myCid">
+      <div class="small-container">
 
-    <br/>
+        <h2>Why Open PID?</h2>
+        <p>An important aspect of open science is the exchange of data assets or 'digital objects', such as publications, software, protocols, genome sequences</p>
 
-    <label for="publicationType">Select type:</label>
-    <select name="publicationType" id="publicationType">
-      <option value="sa">Scholarly Article</option>
-      <option value="io">Image Object</option>
-      <option value="ms">Medical Study</option>
-    </select>
+        <h2>What is Open PID</h2>
+        <p>
+          OpenPID is a lightweight application that helps you to use the power of Web3 to store your digital assets on the permanent web, in three steps:
+        </p>
 
-    <br/>
-    <label for="authors">Authors:</label>
-    <div class="container1">
-      <button class="add_form_field">Add New &nbsp; <span style="font-size:16px; font-weight:bold;">+ </span></button>
-      <div id="author">
-        ORCID or similar PID
-        <input type="text" name="pid[]">
-        <br/>
-        or Name <input type="text" name="name[]"> 
-        and Organization <input type="text" name="organization[]">
+        <ul>
+          <li>Your files or folders are stored on IPFS</li>
+          <li>The metadata about your digital asset is created in JSON-LD using [schema.org](http://schema.org/) and also stored on IPFS</li>
+          <li>A globally unique, persistent and resolvable identifier ('PID' or 'GUPRI') that points to both your files and your metadata is minted on ENS and permanently stored on the Ethereum blockchain</li>
+        </ul>
 
+        <h2>FAQ</h2>
+        <p>Wait, does this mean your website offers free storage?</p>
       </div>
-    </div>
 
-    <button id="publish" type="button" class="btn btn-success" style="margin: 50px 100px;">Publish</button>
-
-  </main>
-<!--  <button id="bauth" type="button" class="btn btn-primary" style="margin: 50px 100px;">Connect wallet</button>-->
-</body>
-<script type="text/javascript" src="dist/app.js"></script>
-
+    </main>
+  </body>
+  <script type="text/javascript" src="dist/app.js"></script>
 </html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Open PID Client</title>
+  <meta name="description" content="Test the full stack of Ceramic Network components in a web browser.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="https://cloud.typography.com/7060374/7041032/css/fonts.css" />
+  <link rel="stylesheet" href="./css/main.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      var max_fields = 10;
+      var wrapper = $(".container1");
+      var add_button = $(".add_form_field");
+
+      var x = 1;
+      $(add_button).click(function (e) {
+        e.preventDefault();
+        if (x < max_fields) {
+          x++;
+          $(wrapper).append(
+            '<div id="author" name="author">ORCID or similar PID<input type="text" name="pid[]"><br/>or Name <input type="text" name="name[]">and Organization <input type="text" name="organization[]"><a href="#" class="delete">Delete</a></div>'
+          ); //add input box
+        }
+        else {
+          alert('You Reached the limits')
+        }
+      });
+
+      $(wrapper).on("click", ".delete", function (e) {
+        e.preventDefault(); $(this).parent('div').remove(); x--;
+      })
+    });
+  </script>
+</head>
+
+<body id="create">
+  <div id="root"></div>
+  <header>
+
+    <div class="container">
+      <h1>Open PID</h1>
+
+      <div>
+        <button id="bauth" type="button" class="btn btn-primary">Connect wallet</button>
+        <nav>
+          <ul>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/create.html">Create</a></li>
+            <li><a href="/explore.html">Explore</a></li>
+          </ul>
+        </nav>
+
+      </div>
+      <!--      <div>-->
+      <!--        <img id="logo" src="images/openpid.png" alt="">-->
+    </div>
+  </header>
+  <main>
+
+    <div class="small-container">
+
+      <section>
+    <h2>Create PID</h2>
+
+      <p>Lorem ipsum</p>
+      </section>
+
+    <form id="create-pid">
+    <section>
+      <span class="number">1</span>
+      <h3>File upload</h3>
+      <label for="myFile" class="hidden">Upload a file</label>
+      <input id="myFile" type="file" />
+      <button id="upload" type="button" class="btn btn-primary">Upload 🚀</button>
+
+      <label for="myCid">or Enter IPFS CID</label>
+      <input type="text" id="myCid">
+    </section>
+
+    <section>
+      <span class="number">2</span>
+      <h3>Type of publication</h3>
+    <label for="publicationType" class="hidden">Select type:</label>
+    <select name="publicationType" id="publicationType">
+      <option value="book">Book</option>
+      <option value="scholarlyArticle">Scholarly Article</option>
+      <option value="softwareApplication">Software Application</option>
+      <option value="imageObject">Image Object</option>
+      <option value="medicalStudy">Medical Study</option>
+    </select>
+
+    </section>
+
+    <section>
+      <span class="number">3</span>
+      <h3>Auhors</h3>
+    <label for="authors" class="hidden">Authors:</label>
+    <div class="container1">
+      <div id="author" name="author">
+        <label>ORCID or similar PID</label>
+        <input type="text" name="pid[]">
+        <br/>
+        <label>or Name</label><input type="text" name="name[]"> 
+        <label>and Organization</label><input type="text" name="organization[]">
+      </div>
+      <button class="add_form_field">Add New &nbsp; <span style="font-size:16px; font-weight:bold;">+ </span></button>
+    </div>
+
+    </section>
+
+    <section>
+      <h3>Metadata</h3>
+      <span class="number">4</span>
+    <label for="myDescription">Description:</label>
+    <textarea name="myDescription" id="myDescription"></textarea>
+
+    <br/>
+    <label for="myPid">Choose a PID:</label>
+    <input title="Ideally a unique short identifier" type="text" id="myPid">
+
+    </section>
+
+    <section>
+
+    <button id="publish" class="magenta" type="button" class="btn btn-success">Publish</button>
+
+    </section>
+  </form>
+
+    </div>
+
+  </main>
+</body>
+<script type="text/javascript" src="dist/app.js"></script>
+
+</html>
