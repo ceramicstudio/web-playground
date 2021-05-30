@@ -4,9 +4,10 @@ import KeyDidResolver from 'key-did-resolver'
 
 import { createCeramic } from './ceramic'
 import { createIDX } from './idx'
-import { getProvider } from './wallet'
+import { getProvider, web3Modal} from './wallet'
 import type { ResolverRegistry } from 'did-resolver'
 import { NFTStorage } from 'nft.storage'
+import ENS, { getEnsAddress } from '@ensdomains/ensjs'
 
 declare global {
   interface Window {
@@ -30,23 +31,28 @@ const nftStorageClient = new NFTStorage({ token: nftStorageApiKey })
 
 const ceramicPromise = createCeramic()
 
+
 const authenticate = async (): Promise<string> => {
+  // provider = await getProvider()
   const [ceramic, provider] = await Promise.all([ceramicPromise, getProvider()])
-  const keyDidResolver = KeyDidResolver.getResolver()
-  const threeIdResolver = ThreeIdResolver.getResolver(ceramic)
-  const resolverRegistry: ResolverRegistry = {
-    ...threeIdResolver,
-    ...keyDidResolver,
-  }
-  const did = new DID({
-    provider: provider,
-    resolver: resolverRegistry,
-  })
-  await did.authenticate()
-  await ceramic.setDID(did)
-  const idx = createIDX(ceramic)
-  window.did = ceramic.did
-  return idx.id
+
+
+  // const keyDidResolver = KeyDidResolver.getResolver()
+  // const threeIdResolver = ThreeIdResolver.getResolver(ceramic)
+  // const resolverRegistry: ResolverRegistry = {
+  //   ...threeIdResolver,
+  //   ...keyDidResolver,
+  // }
+  // const did = new DID({
+  //   provider: provider,
+  //   resolver: resolverRegistry,
+  // })
+  // await did.authenticate()
+  // await ceramic.setDID(did)
+  // const idx = createIDX(ceramic)
+  // window.did = ceramic.did
+  // return idx.id
+  return new Promise(()=>{'test'})
 }
 
 document.getElementById('bauth')?.addEventListener('click', () => {
@@ -78,6 +84,7 @@ document.getElementById('publish')?.addEventListener('click', () => {
   if (cid === '') {
     cid = (<HTMLInputElement>document.getElementById('myCid'))?.value
   }
+  
   console.log("cid", cid);
 
   const authors:any = [];
@@ -107,5 +114,20 @@ document.getElementById('publish')?.addEventListener('click', () => {
 
   const type = (<HTMLInputElement>document.getElementById('publicationType'))?.value
   console.log("type", type);
+
+  const identifyer = type + '1000'
+  const ens_domain = (<HTMLInputElement>document.getElementById('myDomain'))?.value
+  console.log(ens_domain)
+  registerOnENS(ens_domain, identifyer).then(
+    ()=>{console.log("worked")}
+    ).catch((err)=>{console.log(err)})
   // TODO build JSON-LD based on the schema of the selected type
 })
+
+
+async function registerOnENS(ens_domain: string, identifyer: string){
+  const ethProvider = await web3Modal.connect()
+  const ens = new ENS({ ethProvider, ensAddress: getEnsAddress('1') })
+  const ENSName = ens.name(ens_domain)
+  const subdomain_tx = await ENSName.createSubdomain(identifyer)
+}
