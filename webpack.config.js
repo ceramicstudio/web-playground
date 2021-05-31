@@ -21,7 +21,7 @@ module.exports = {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/,
-      },
+      }
     ],
   },
   node: {
@@ -31,4 +31,5 @@ module.exports = {
     tls: 'empty',
     child_process: 'empty',
   },
+  watch: true
 }

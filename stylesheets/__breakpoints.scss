@@ -1,0 +1,30 @@
+$breakpoint-sm: 600px;
+$breakpoint-md: 900px;
+$breakpoint-bax: 1160px;
+$breakpoint-lg: 1360px;
+$breakpoint-xl: 1540px;
+$breakpoint-xxl: 1900px;
+$breakpoint-xxxl: 2000px;
+
+.shown-till-md {
+  display: flex;
+  @media (min-width: $breakpoint-md) {
+    display: none;
+  }
+}
+
+
+.shown-from-md {
+  display: none !important;
+  @media (min-width: $breakpoint-md) {
+    display: inline;
+  }
+}
+
+
+.shown-from-lg {
+  display: none;
+  @media (min-width: $breakpoint-lg) {
+    display: inline;
+  }
+}

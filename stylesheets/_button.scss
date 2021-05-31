@@ -1,0 +1,18 @@
+button {
+  background: none;
+  width: auto;
+  //margin-bottom: 2rem;
+  border: none;
+  font-size: 1.125rem;
+  border: 1px solid $grey;
+  border-radius: 4px;
+  padding: .125rem 1rem;
+  text-align: center;
+
+
+  &.magenta  {
+    background: #ff2177;
+    color: white;
+  }
+
+}

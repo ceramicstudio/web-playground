@@ -1,0 +1,37 @@
+#create {
+
+    main {
+
+
+      section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid $grey;
+        margin-bottom: 1.5rem;
+
+        position: relative;
+        padding-left: 3rem;
+
+        .number {
+          position: absolute;
+          top: 0.63rem;
+          left: 0;
+          font-size: 1.8rem;
+          line-height: 1;
+          font-family: "Gotham Rounded A", "Gotham Rounded B";
+          font-style: normal;
+          font-weight: 700;
+        }
+      }
+
+      label, button, input {
+
+        display: inline-block;
+        margin-bottom: 1.5rem;
+
+      }
+
+    }
+}

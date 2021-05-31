@@ -1,0 +1,47 @@
+.container {
+
+  width: calc(100% - 2rem);
+  position: relative;
+  margin: 0 auto;
+  flex-direction: column;
+
+  @media (min-width : $breakpoint-sm) {
+    width: calc(100% - 4rem);
+  }
+
+  @media (min-width : $breakpoint-md) {
+    width: 920px;
+  }
+
+  @media (min-width : $breakpoint-bax) {
+    width: 1000px;
+  }
+
+  @media (min-width : $breakpoint-lg) {
+    width: 1020px;
+  }
+}
+
+.small-container {
+
+  width: calc(100% - 0rem);
+  position: relative;
+  margin: 0 auto;
+  background: #fff;
+
+  @media (min-width : $breakpoint-sm) {
+    width: calc(100% - 4rem);
+  }
+
+  @media (min-width : $breakpoint-md) {
+    width: 760px;
+  }
+
+  @media (min-width : $breakpoint-bax) {
+    width: 760px;
+  }
+
+  @media (min-width : $breakpoint-lg) {
+    width: 760px;
+  }
+}
