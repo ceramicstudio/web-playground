@@ -12,7 +12,8 @@
   "scripts": {
     "build": "webpack",
     "lint": "eslint src",
-    "serve": "serve ."
+    "serve": "serve .",
+    "watch": "webpack --watch"
   },
   "dependencies": {
     "@3id/connect": "^0.1.6",
