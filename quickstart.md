@@ -1,136 +1,96 @@
-# Ceramic Playground Quickstart (& Video Reference)
-## Getting Started
-1. Click on the "Connect Wallet" Button, if you don't have a wallet MetaMask is a good place to start.
-2. Follow the prompts that are in the upper right hand corner to authenticate with 3ID-Connect. 
-   - After you authenticate open your web browser tools, you should see something like: `Connected with DID: did:3:kjz...r5y`. If you do not see this please reach out in Discord.
+# Quickstart
 
-## Basic IDX Usage: 
-Let's create a basic profile, this is a default schema so it's easy. All of the following commands can be completed in the web brower's console.
+Get started exploring what's possible with IDX using the [IDX SDK](../reference/idx.md). For usage in a Command Interface, you will need to [install the IDX CLI](../reference/cli.md)
 
-1. `await idx.get('basicProfile', ceramic.did.id)`
-  - IDX.get has 1 mandatory parameter that is a string, usually it isn't so readable. This is readable because it's been aliased. For more information see: https://developers.idx.xyz/build/aliases/
-  - Then we need to "sign" the request, in the Playground we access it from the Ceramic instance. It's generated when you authenticate with 3ID-Connect.
-  - OUTPUT: ` `
-   - There will be nothing here because there's no profile attached to the DID.
-2. `await idx.set('basicProfile', { name: 'Your Name', description: 'Tell us about yourself!' emoji:'✌🏻' })`
-  - Notice that we did not provide our DID, but it's updating our record. This is because we default to the currently active ID.
-  - These fields are optional, but they can be set to be required by the schema.
-3. `await idx.merge('basicProfile', { emoji: '👍🏻'})`
-   - Updating records is easy, change any details you need to anytime you need to.
+!!! warning ""
 
-## Creating a Custom Schema:
-Schema creation might seem daunting at first, but it's quite simple when you understand how it's all built. 
+    :octicons-alert-16: IDX is in alpha, Libraries may be unstable and APIs are subject to change. Data created on IDX during alpha will *not* be portable to production. Please share what you're working on and report any issues in the [IDX Discord](https://chat.idx.com){:target="_blank"}.
 
-### Helper Functions:
-To start we will need to create a few helper functions. These are all included in our `@ceramicstudio/idx-tools` package, this is just to demystify them. To use them you can just copy & paste the code into your browser console.
-1. Create Tile
-    ```javascript
-      /**
-      	* Create Tile is a simple function to create a TileDocument on the Ceramic Network.
-      	*/
-      const createTile = async (ceramic, content, metadata) => {
-      	if (ceramic.did == null) {
-          throw new Error('Ceramic instance is not authenticated')
-        }
+## **Prerequisites**
 
-        if (metadata.controllers == null || metadata.controllers.length === 0) {
-          metadata.controllers = [ceramic.did.id] // if there's no controllers in the metadata, we assume that you're the only controller and automatically set it for you.
-        }
+The IDX SDK requires [Node.js](https://nodejs.org/){:target="_blank"} v14+ and npm v6+ (usually installed with Node.js). Make sure both are installed.
 
-      	// TileDocuments are what make up our Ceramic Network. 
-        const doc = await TileDocument.create(ceramic, content, metadata)
-        await ceramic.pin.add(doc.id) // Here we pin the stream to an IPFS Node.
-        
-      	return doc
-      }
-    ```
-2. Create Schema
-    ```javascript
-      const createSchema = async (ceramic, doc) => {
-        if(doc.id == null) {
-          return await createTile(ceramic, doc.content, {
-            controllers: doc.controllers,
-            schema: doc.schema ? docIDToString(doc.schema) : undefined
-          })
-        }
+On Linux you will also need the `libsecret` library to be installed, as [instructed here](https://github.com/atom/node-keytar#on-linux).
 
-        const loaded = await TileDocument.load(ceramic, doc.id)
-        console.log(loaded)
-        return loaded
-      }
-    ```
-3. Create Definition
-    ```javascript
-      /**
-      	* Definitions are a key part of how Ceramic categorizes data.
-      	* Without the definition the schema is inaccessible. 
-      	*/
-      const createDefinition = async (ceramic, definition) => {
-      	// We use our createTile helper to create our definition tile. 
-      	return await createTile(ceramic, 
-      		definition, 
-      		{
-      			schema: 'ceramic://k3y52l7qbv1fry1fp4s0nwdarh0vahusarpposgevy0pemiykymd2ord6swtharcw'
-      		})
-      }
+## **Step 1: Install the IDX SDK**
+
+=== "Command"
+
+    ```bash
+    npm i @ceramicstudio/idx @ceramicnetwork/http-client
     ```
 
-### Creating & Using Custom Schemas
-Simply put a schema is just a JSON object. The following will create a super simple blog post schema. 
-```JSON
-  const blogSchema = {
-    $schema: 'http://json-schema.org/draft-07/schema#', // required
-    title: 'Blog', // required
-    type: 'object', // required
-    properties: { // all properties are optional.
-      date: {
-        type: 'string',
-        format: 'date-time',
-        title: 'date',
-        maxLength: 30,
-      },
-      title: {
-        type: 'string',
-        title: 'title',
-        maxLength: 50
-      },
-      text: {
-        type: 'string',
-        title: 'text',
-        maxLength: 4000,
-      },
-    },
-  }
-```
-You can create any schema you want, but we'll be using the above schema for the guide.
+You will need to connect to a Ceramic node. The following is an example of connecting to a our Clay TestNet.
 
-1. Create Schema: `const schema = await createSchema(ceramic, { controllers: [ceramic.did.id], content: blogSchema})`
-   - Note that we're using our createSchema function from the Helper Functions section.
-   - The controllers parameter is optional and will default to the current DID. However, if you need more than one DID to control the schema (and any content created) they need to be listed in the controllers section.
-2. Create Definition: 
-    ```javascript
-      const definition = await createDefinition(ceramic, {
-        name: 'User-Centric Blog',
-        description: "A blog type where the content is stored with the user, not a server.",
-        schema: schema.commitId.toUrl()
-      })
+=== "Command"
+
+    ```JavaScript
+    import CeramicClient from '@ceramicnetwork/http-client'
+
+    const API_URL = 'https://gateway-clay.ceramic.network'
+
+    const ceramic = new CeramicClient(API_URL)
     ```
-   - The definition is a critical part of Ceramic's Infrastructure
-   - the following is the structure used:
-     - ```
-        DID -> Index -> Definition -> Record
-                            ^
-                        Schema
-      ```
-3. Create Blog Post:
-   - ```javascript
-      await idx.set(definition.id, {
-        date: new Date().toISOString(), 
-        title: 'hello world!',
-        text: 'Your first user-centric blog post ✌🏻'
-      })
+
+## **Step 2: Query a Record**
+Let's query a [record](../../learn/glossary.md#record) that stores a [basic profile](../../guides/definitions/default.md#basic-profile).As you'll see below, we are looking up the user ID: `did:key:z6MkuEd4fm7qNq8hkmWFM1NLVBAXa4t2GcNDdmVzBrRm2DNm`.
+
+=== "Command"
+
+    ```JavaScript
+    await idx.get(
+        'basicProfile', 
+        'did:key:z6MkuEd4fm7qNq8hkmWFM1NLVBAXa4t2GcNDdmVzBrRm2DNm'
+    )
     ```
-4. Get Blog Post:
-    ```javascript
-      await idx.get(definition.id)
+
+=== "Output"
+
+    ```JavaScript
+    // Note: this record is live and may not return exactly what you see below.
+    {
+      name: "Paul",
+      residenceCountry: "IE"
+    }
     ```
+
+## **Step 3: Create a DID**
+The IDX SDK does not support DID Creation, however we've built [3ID-Connect](../../authentication/3id-did/3id-connect.md) to allow web apps to create a DID based off of your wallet.
+
+## **Step 4: Create a Record**
+
+Use the `idx.set()` function to set data to a [record](../../learn/glossary.md#record) for the currently authenticated DID. In this example we're passing the same `basicProfile` alias as above. This will let us record data corresponding to the default basic profile defintion. The second part of the function is the new content we want to set. Finally, the last part of the function is optional but it is the ID that you are trying to set. If nothing is provided it will default to your authenticated DID.
+
+=== "Output"
+
+    ```JavaScript
+    await idx.set('basicProfile', {
+      name: '<Your Name>'
+    })
+    ```
+
+## **Step 5: Query Your Record**
+
+Use the `idx.get()` to query your newly created basic profile record.
+
+=== "Command"
+
+    ```JavaScript
+    await idx.get('basicProfile')
+    ```
+
+=== "Output"
+
+    ```JSON
+    {
+      name: "<Your Name>" 
+    }
+    ```
+
+## **Doing More**
+
+All documentation for the IDX SDK can be [found here](../reference/idx.md), for any help or ideas join us on [Discord](https://chat.idx.com){:target="_blank"}!
+
+## **That's It!**
+
+Congratulations on completing this introductory tutorial. You're well on your way to becoming an IDX Developer!
