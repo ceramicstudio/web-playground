@@ -47,6 +47,28 @@ const updateAlert = (status: string, message: string) => {
   }
 }
 
+document.getElementById('activate_ceramic')?.addEventListener('click', () => {
+  const ceramicIframe = document.getElementById('ceramic_docs')
+  if (ceramicIframe?.classList.contains('show')) {
+    ceramicIframe?.classList.remove('show')
+    document.getElementById('activate_ceramic')?.classList.remove('active')
+  } else {
+    document.getElementById('activate_ceramic')?.classList.add('active')
+    ceramicIframe?.classList.add('show')
+  }
+})
+
+document.getElementById('activate_idx')?.addEventListener('click', () => {
+  const idxIframe = document.getElementById('idx_docs')
+  if (idxIframe?.classList.contains('show')) {
+    idxIframe?.classList.remove('show')
+    document.getElementById('activate_idx')?.classList.remove('active')
+  } else {
+    document.getElementById('activate_idx')?.classList.add('active')
+    idxIframe?.classList.add('show')
+  }
+})
+
 document.getElementById('bauth')?.addEventListener('click', () => {
   document.getElementById('loader')?.classList.remove('hide')
   authenticate().then(

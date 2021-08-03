@@ -34,7 +34,7 @@
       }
       h3 {
         font-size: 1.5rem;
-        margin-left: 40px;
+        /* margin-left: 40px; */
       }
       p {
         font-size: 1.2rem;
@@ -64,9 +64,9 @@
         border: 0.25em solid currentColor;
         border-right-color: transparent;
         border-radius: 50%;
-        -webkit-animation: spin 4s linear infinite;
-        -moz-animation: spin 4s linear infinite;
-        animation: spin 4s linear infinite;
+        -webkit-animation: spin 1s linear infinite;
+        -moz-animation: spin 1s linear infinite;
+        animation: spin 1s linear infinite;
         margin-right: 10px;
       }
       @-moz-keyframes spin {
@@ -87,6 +87,31 @@
       }
       .alert {
         margin-top: 15px;
+      }
+      .space-around {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+      }
+      .ceramic-btn.active {
+        background-color: #f87237 !important;
+        color: white !important;
+      }
+      .idx-btn.active {
+        background-color: #6535ff !important;
+        color: white !important;
+      }
+      ul {
+        padding-left: 20px;
+      }
+      .documentation {
+        resize: both;
+        overflow: auto;
+        height: 200px;
+        width: 100%;
+        border: 1px solid transparent;
+        display: none;
       }
     </style>
   </head>
@@ -110,7 +135,28 @@
           browser.
         </p>
       </header>
-      <main class="center">
+      <main class="container center">
+        <div class="row">
+          <div class="col-xs-12 space-around">
+            <div class="btn btn-default ceramic-btn" id="activate_ceramic">Ceramic Docs</div>
+            <div class="btn btn-default idx-btn" id="activate_idx">IDX Docs</div>
+          </div>
+          <div class="col-xs-12 col-lg-6">
+            <iframe
+              class="documentation"
+              src="https://developers.ceramic.network/build/javascript/quick-start/"
+              id="ceramic_docs"
+            >
+            </iframe>
+          </div>
+          <div class="col-xs-12 col-lg-6 text-right">
+            <iframe
+              class="documentation"
+              src="https://developers.idx.xyz/build/quick-start/"
+              id="idx_docs"
+            ></iframe>
+          </div>
+        </div>
         <div id="techologies">
           <h3>Technologies</h3>
           <ul>
