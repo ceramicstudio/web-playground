@@ -34,13 +34,40 @@ const authenticate = async (): Promise<string> => {
   return idx.id
 }
 
+const updateAlert = (status: string, message: string) => {
+  const alert = document.getElementById('alerts')
+
+  if (alert !== null) {
+    alert.textContent = message
+    alert.classList.add(`alert-${status}`)
+    alert.classList.remove('hide')
+    setTimeout(() => {
+      alert.classList.add('hide')
+    }, 5000)
+  }
+}
+
 document.getElementById('bauth')?.addEventListener('click', () => {
+  document.getElementById('loader')?.classList.remove('hide')
   authenticate().then(
     (id) => {
-      console.log('Connected with DID:', id)
+      const userDid = document.getElementById('userDID')
+      const concatId = id.split('did:3:')[1]
+      if (userDid !== null) {
+        userDid.textContent = `${concatId.slice(0, 4)}...${concatId.slice(
+          concatId.length - 4,
+          concatId.length
+        )}`
+      }
+      updateAlert('success', `Successfully connected with ${id}`)
+      document.getElementById('loader')?.classList.add('hide')
+      document.getElementById('bauth')?.classList.add('hide')
+      document.getElementById('instructions')?.classList.remove('hide')
     },
     (err) => {
       console.error('Failed to authenticate:', err)
+      updateAlert('danger', err)
+      document.getElementById('loader')?.classList.add('hide')
     }
   )
 })
