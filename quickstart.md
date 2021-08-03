@@ -29,7 +29,7 @@ The following is a sample Blog Schema with some added definition in the comments
 
 ```JavaScript
 const blogSchema = {
-  $schema: 'http://json-schema.org/draft-07/schema#', // this is required.
+  $schema: 'http://json-schema.org/draft-07/schema#', // required.
   title: 'Blog Post', // required
   type: 'object', // required
   properties: {
@@ -38,7 +38,7 @@ const blogSchema = {
       format: 'date-time',
       title: 'date',
       maxLength: 30,
-    }, // any further properties are optional.
+    }, // any further properties are optional. You must have one property in the schema
     title: {
       type: 'string',
       title: 'title',
@@ -103,30 +103,40 @@ Updating an IDX record is just as easy as querying one. The following is just my
 myProfile = await idx.set('basicProfile', {
   name: '<YOUR NAME> ',
   emoji: '✌🏻', // most emoji's will work, if you get an error try a different one. Some are registered as 2 characters not one.
-  description: "<YOUR DESCRIPTION"
+  description: "<YOUR DESCRIPTION>"
 })
 ```
 
-As mentioned above IDX was created to access records that aren't only yours. 
+Updating a record is done using `idx.merge()`. The major difference between set & merge is that merge will only update the parameters given, set will set all parameters (even those not included).
 
 ```JavaScript
-let loadedProfile = await idx.get('basicProfile', 'did:3:kjzl6cwe1jw146g16yd2w2dhcirw4zhevar48divve67jx3fq5ztxsx12aimr5y')
+await idx.merge('basicProfile', {
+  description: '<NEW DESCRIPTION>'
+})
 ```
 
-You should now see my basicProfile in your terminal, all you needed is my DID and you can see my record. If you've been following along you might remember the `controller` parameter we set for our `ceramicBlogPost`, similar to how you are the only person who can edit that post or update it in anyway you will be unable to update my record. This is because I'm the controller, but what if we were to try? 
+This can be checked quickly with `myProfile = await idx.get('basicProfile')`. You should see your changes reflected.
+
+As mentioned above IDX was created to access records that aren't only yours. The playground has been preloaded with `exampleDID` & `exampleDID2` variables for you to use.
 
 ```JavaScript
-let notMyUpdate = await idx.set(
+await idx.get('basicProfile', exampleDID)
+```
+
+You should now see a basicProfile in your terminal, all you needed is a DID and you can see my record. If you've been following along you might remember the `controller` parameter we set for our `ceramicBlogPost`, similar to how you are the only person who can edit that post or update it in anyway you will be unable to update my record. This is because you aren't the controller, but what if we were to try? 
+
+```JavaScript
+await idx.set(
   'basicProfile', 
   { emoji: '💻' }, 
-  'did:3:kjzl6cwe1jw146g16yd2w2dhcirw4zhevar48divve67jx3fq5ztxsx12aimr5y'
+  exampleDID
 )
 ```
 
 Now to confirm that nothing got changed let's run an `idx.get()`.
 
 ```JavaScript
-await idx.get('basicProfile', 'did:3:kjzl6cwe1jw146g16yd2w2dhcirw4zhevar48divve67jx3fq5ztxsx12aimr5y')
+await idx.get('basicProfile', exampleDid)
 ```
 
 You'll notice that our change wasn't applied at all. Which is great because it shouldn't have applied. 
@@ -159,3 +169,6 @@ Finally, we can get that blog post, and any others we create almost as easily as
 ```JavaScript
 await idx.get(blogDefinition.commitId.toString())
 ```
+
+## Congratulations! 
+You now know how to work with both the core concepts of Ceramic & IDX, well done! Now come join our [Discord](https://chat.ceramic.network){:target="_blank"} & show us what you're going to make! If you want more tutorials and other posts feel free to see our [blog](https://blog.ceramic.network).
