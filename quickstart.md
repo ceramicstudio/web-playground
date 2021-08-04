@@ -25,7 +25,7 @@ That's all it takes. To explain a little more on what happens, we pass in the au
 **WARNING: Schemas should not be created at runtime and should be created beforehand in a 'bootstrap' file.**
 In the Ceramic Network Schemas are stored as tiles, but they have more uses than just storing information. If you want to [take a look](https://developers.ceramic.network/tools/idx/overview/#schemas){:target="_blank"} our documentation will provide much more detail.
 
-The following is a sample Blog Schema with some added definition in the comments.
+The following is a sample Book Schema with some added definition in the comments.
 
 ```JavaScript
 const bookSchema = {
@@ -56,19 +56,19 @@ const bookSchema = {
 Now that we've defined the schema we can create it. Creating a Schema is exactly like creating a Tile.
 
 ```JavaScript
-const schema = await TileDocument.create(ceramic, blogSchema)
+const schema = await TileDocument.create(ceramic, bookSchema)
 ```
 
 ```JavaScript
-const ceramicBlogPost = await TileDocument.create(
+const ceramicBook = await TileDocument.create(
     ceramic,
-    { // We defined this in the blogSchema above
+    { // We defined this in the bookSchema above
         date: new Date().toISOString(),
         title: 'Hello Ceramic network!',
-        text: 'My First Post.'
+        text: 'My First book.'
     }, {
         controllers: [ceramic.did.id], // This should be your DID, or the DID of whoever will control the Stream
-        family: 'books', // A tag on the tile to help group Schemas & Posts together
+        family: 'books',
         schema: schema.commitId.toString() // The commit ID of the schema we created earlier. This will validate that only what we expect is in the tile.
     }
 )
@@ -77,9 +77,9 @@ const ceramicBlogPost = await TileDocument.create(
 And that's all you need to do to create your first book. Similar to creating a Tile you can load one quite easily.
 
 ```JavaScript
-const loadedBlogPost = await TileDocument.load(
+const loadedBook = await TileDocument.load(
     ceramic,
-    ceramicBlogPost.commitId.toString() // This needs to be a commitID string to load, we're just loading the book we created earlier.
+    ceramicBook.commitId.toString() // This needs to be a commitID string to load, we're just loading the book we created earlier.
 )
 ```
 
@@ -123,7 +123,7 @@ As mentioned above IDX was created to access records that aren't only yours. The
 await idx.get('basicProfile', exampleDID)
 ```
 
-You should now see a basicProfile in your terminal, all you needed is a DID and you can see my record. If you've been following along you might remember the `controller` parameter we set for our `ceramicBlogPost`, similar to how you are the only person who can edit that post or update it in anyway you will be unable to update my record. This is because you aren't the controller, but what if we were to try? 
+You should now see a basicProfile in your terminal, all you needed is a DID and you can see my record. If you've been following along you might remember the `controller` parameter we set for our `ceramicBook`, similar to how you are the only person who can edit that book or update it in anyway you will be unable to update this record. This is because you aren't the controller, but what if we were to try? 
 
 ```JavaScript
 await idx.set(
@@ -141,13 +141,13 @@ await idx.get('basicProfile', exampleDid)
 
 You'll notice that our change wasn't applied at all. Which is great because it shouldn't have applied. 
 
-## Getting our Blog Post ready for IDX
+## Getting our Book ready for IDX
 Now with what we've learned about IDX, let's get our book schema ready for use with IDX. This is a fairly simple process that we've helped make as straight forward as possible. 
 
 For starters we will need to create a [definition](https://developers.ceramic.network/tools/idx/overview/#definitions){:target="_blank"} to tell IDX what we're developing.
 
 ```JavaScript
-const blogDefinition = await createDefinition(ceramic, {
+const bookDefinition = await createDefinition(ceramic, {
   name: 'Book Definition',
   description: 'A short book',
   schema: schema.commitId.toUrl() // Note this is a URL not a string. Ceramic urls are prefaced with ceramic://
@@ -157,7 +157,7 @@ const blogDefinition = await createDefinition(ceramic, {
 Now we're ready to use this definition to create a record! We just need to use our new commit id we created above to create our records that will be automatically added to your IDX record. Creating a Definition will also enforce the structure of your schema, ensuring that the data requested will be provided.
 
 ```JavaScript
-const newBlogPost = await idx.set(blogDefinition.commitId.toString(), {
+const newBook = await idx.set(bookDefinition.commitId.toString(), {
   date: new Date().toISOString(),
   title: 'Hello IDX!',
   text: 'Welcome to IDX, data stored on the Ceramic Network'
@@ -167,7 +167,7 @@ const newBlogPost = await idx.set(blogDefinition.commitId.toString(), {
 Finally, we can get the details about our book, and any others we create almost as easily as we can get your basic profile.
 
 ```JavaScript
-await idx.get(blogDefinition.commitId.toString())
+await idx.get(bookDefinition.commitId.toString())
 ```
 
 ## Congratulations! 
