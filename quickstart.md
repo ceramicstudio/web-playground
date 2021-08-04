@@ -28,12 +28,12 @@ In the Ceramic Network Schemas are stored as tiles, but they have more uses than
 The following is a sample Blog Schema with some added definition in the comments.
 
 ```JavaScript
-const blogSchema = {
+const bookSchema = {
   $schema: 'http://json-schema.org/draft-07/schema#', // required.
-  title: 'Blog Post', // required
+  title: 'Book', // required
   type: 'object', // required
   properties: {
-    date: {
+    publishedDate: {
       type: 'string',
       format: 'date-time',
       title: 'date',
@@ -44,7 +44,7 @@ const blogSchema = {
       title: 'title',
       maxLength: 50
     },
-    text: {
+    contents: {
       type: 'string',
       title: 'text',
       maxLength: 4000
@@ -68,18 +68,18 @@ const ceramicBlogPost = await TileDocument.create(
         text: 'My First Post.'
     }, {
         controllers: [ceramic.did.id], // This should be your DID, or the DID of whoever will control the Stream
-        family: 'blog posts', // A tag on the tile to help group Schemas & Posts together
+        family: 'books', // A tag on the tile to help group Schemas & Posts together
         schema: schema.commitId.toString() // The commit ID of the schema we created earlier. This will validate that only what we expect is in the tile.
     }
 )
 ```
 
-And that's all you need to do to create your first blog post. Similar to creating a Tile you can load one quite easily.
+And that's all you need to do to create your first book. Similar to creating a Tile you can load one quite easily.
 
 ```JavaScript
 const loadedBlogPost = await TileDocument.load(
     ceramic,
-    ceramicBlogPost.commitId.toString() // This needs to be a commitID string to load, we're just loading the post we created earlier.
+    ceramicBlogPost.commitId.toString() // This needs to be a commitID string to load, we're just loading the book we created earlier.
 )
 ```
 
@@ -142,14 +142,14 @@ await idx.get('basicProfile', exampleDid)
 You'll notice that our change wasn't applied at all. Which is great because it shouldn't have applied. 
 
 ## Getting our Blog Post ready for IDX
-Now with what we've learned about IDX, let's get our blog posts ready for use with IDX. This is a fairly simple process that we've helped make as straight forward as possible. 
+Now with what we've learned about IDX, let's get our book schema ready for use with IDX. This is a fairly simple process that we've helped make as straight forward as possible. 
 
 For starters we will need to create a [definition](https://developers.ceramic.network/tools/idx/overview/#definitions){:target="_blank"} to tell IDX what we're developing.
 
 ```JavaScript
 const blogDefinition = await createDefinition(ceramic, {
-  name: 'Blog Post',
-  description: 'A single blog post',
+  name: 'Book Definition',
+  description: 'A short book',
   schema: schema.commitId.toUrl() // Note this is a URL not a string. Ceramic urls are prefaced with ceramic://
 })
 ```
@@ -164,7 +164,7 @@ const newBlogPost = await idx.set(blogDefinition.commitId.toString(), {
 })
 ```
 
-Finally, we can get that blog post, and any others we create almost as easily as we can get your basic profile.
+Finally, we can get the details about our book, and any others we create almost as easily as we can get your basic profile.
 
 ```JavaScript
 await idx.get(blogDefinition.commitId.toString())
