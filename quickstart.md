@@ -147,11 +147,16 @@ Now with what we've learned about IDX, let's get our book schema ready for use w
 For starters we will need to create a [definition](https://developers.ceramic.network/tools/idx/overview/#definitions){:target="_blank"} to tell IDX what we're developing.
 
 ```JavaScript
-const bookDefinition = await createDefinition(ceramic, {
-  name: 'Book Definition',
-  description: 'A short book',
-  schema: schema.commitId.toUrl() // Note this is a URL not a string. Ceramic urls are prefaced with ceramic://
-})
+const bookDefinition = await TileDocument.create(
+  ceramic,
+  {
+    name: 'Book Definition',
+    description: 'A short book',
+    schema: schema.commitId.toUrl() // This is the schema we will validate against
+  }, {
+    schema: definitionUrl // this is the ceramic url for the definition schema. 
+  }
+)
 ```
 
 Now we're ready to use this definition to create a record! We just need to use our new commit id we created above to create our records that will be automatically added to your IDX record. Creating a Definition will also enforce the structure of your schema, ensuring that the data requested will be provided.
