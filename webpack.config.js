@@ -1,34 +1,45 @@
 const path = require('path')
+const webpack = require('webpack')
 
 module.exports = {
-  mode: 'production',
   entry: {
     app: './src/app.ts',
-    skydb: './src/skydb.ts',
-  },
-  output: {
-    filename: '[name].js',
-    path: path.resolve(__dirname, './dist'),
-    libraryTarget: 'umd',
-    umdNamedDefine: true,
-  },
-  resolve: {
-    extensions: ['.ts', '.js'],
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
+        loader: 'esbuild-loader',
         exclude: /node_modules/,
+        options: {
+          loader: 'tsx',
+          target: 'es2020',
+        },
       },
     ],
   },
-  node: {
-    console: false,
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty',
-    child_process: 'empty',
+  resolve: {
+    extensions: ['.ts', '.js'],
+    fallback: {
+      stream: require.resolve('stream-browserify'),
+      https: require.resolve('https-browserify'),
+      http: require.resolve('http-browserify'),
+      os: require.resolve('os-browserify/browser'),
+      crypto: require.resolve('crypto-browserify'),
+      assert: false,
+      url: false,
+    },
   },
+  plugins: [
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
+    new webpack.ProvidePlugin({
+      Buffer: ['buffer', 'Buffer'],
+    }),
+  ],
+  output: {
+    filename: '[name].js',
+  },
+  mode: 'development',
 }
