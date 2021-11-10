@@ -40,10 +40,13 @@ PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 /*! MIT License. Copyright 2015-2018 Richard Moore <me@ricmoo.com>. See LICENSE.txt. */
 
 >>>>>>> d549638 (Add in data models & upgrade to webpack 5. [Elizabeth Murray])
+=======
+>>>>>>> b06b6ae (update all packages & slim down our webpack)
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 
 /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
