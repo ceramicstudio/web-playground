@@ -1,33 +1,34 @@
+const path = require('path')
+
 module.exports = {
+  mode: 'production',
   entry: {
     app: './src/app.ts',
+    skydb: './src/skydb.ts',
+  },
+  output: {
+    filename: '[name].js',
+    path: path.resolve(__dirname, './dist'),
+    libraryTarget: 'umd',
+    umdNamedDefine: true,
+  },
+  resolve: {
+    extensions: ['.ts', '.js'],
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        loader: 'esbuild-loader',
+        use: 'ts-loader',
         exclude: /node_modules/,
-        options: {
-          loader: 'tsx',
-          target: 'es2020',
-        },
       },
     ],
   },
-  resolve: {
-    extensions: ['.ts', '.js'],
-    fallback: {
-      stream: require.resolve('stream-browserify'),
-      https: require.resolve('https-browserify'),
-      http: require.resolve('http-browserify'),
-      os: require.resolve('os-browserify/browser'),
-      assert: false,
-      url: false,
-    },
+  node: {
+    console: false,
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
+    child_process: 'empty',
   },
-  output: {
-    filename: '[name].js',
-  },
-  mode: 'development',
 }
