@@ -3,7 +3,7 @@ import ThreeIdResolver from '@ceramicnetwork/3id-did-resolver'
 import KeyDidResolver from 'key-did-resolver'
 
 import { createCeramic } from './ceramic'
-import { createDataStore } from './datastore'
+import { createIDX } from './idx'
 import { getProvider } from './wallet'
 import type { ResolverRegistry } from 'did-resolver'
 
@@ -29,9 +29,9 @@ const authenticate = async (): Promise<string> => {
   })
   await did.authenticate()
   await ceramic.setDID(did)
-  const datastore = createDataStore(ceramic)
+  const idx = createIDX(ceramic)
   window.did = ceramic.did
-  return datastore.id
+  return idx.id
 }
 
 const updateAlert = (status: string, message: string) => {
