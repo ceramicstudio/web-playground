@@ -58,17 +58,6 @@ document.getElementById('activate_ceramic')?.addEventListener('click', () => {
   }
 })
 
-document.getElementById('activate_idx')?.addEventListener('click', () => {
-  const idxIframe = document.getElementById('idx_docs')
-  if (idxIframe?.classList.contains('show')) {
-    idxIframe?.classList.remove('show')
-    document.getElementById('activate_idx')?.classList.remove('active')
-  } else {
-    document.getElementById('activate_idx')?.classList.add('active')
-    idxIframe?.classList.add('show')
-  }
-})
-
 document.getElementById('bauth')?.addEventListener('click', () => {
   document.getElementById('loader')?.classList.remove('hide')
   authenticate().then(

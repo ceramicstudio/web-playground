@@ -18,8 +18,6 @@
         background-color: #f7f7f9;
         display: flex;
         flex-direction: column;
-        /* justify-content: center;
-        align-items: center; */
         height: 100vh;
         overflow: auto;
         padding-top: 25px;
@@ -34,7 +32,6 @@
       }
       h3 {
         font-size: 1.5rem;
-        /* margin-left: 40px; */
       }
       p {
         font-size: 1.2rem;
@@ -98,10 +95,6 @@
         background-color: #f87237 !important;
         color: white !important;
       }
-      .idx-btn.active {
-        background-color: #6535ff !important;
-        color: white !important;
-      }
       ul {
         padding-left: 20px;
       }
@@ -139,22 +132,14 @@
         <div class="row">
           <div class="col-xs-12 space-around">
             <div class="btn btn-default ceramic-btn" id="activate_ceramic">Ceramic Docs</div>
-            <div class="btn btn-default idx-btn" id="activate_idx">IDX Docs</div>
           </div>
-          <div class="col-xs-12 col-lg-6">
+          <div class="col-xs-12">
             <iframe
               class="documentation"
               src="https://developers.ceramic.network/build/javascript/quick-start/"
               id="ceramic_docs"
             >
             </iframe>
-          </div>
-          <div class="col-xs-12 col-lg-6 text-right">
-            <iframe
-              class="documentation"
-              src="https://developers.idx.xyz/build/quick-start/"
-              id="idx_docs"
-            ></iframe>
           </div>
         </div>
         <div id="techologies">
@@ -189,7 +174,6 @@
             <li>Open your console by inspecting the page</li>
             <li>Authenticate by clicking "Connect wallet"</li>
             <li>Approve prompts in your Web3 wallet</li>
-            <li>Wait to see "Connected with DID" in your console</li>
             <li>
               <a href="https://developers.ceramic.network/build/writes/" target="_blank">Write</a>
               and
@@ -197,9 +181,11 @@
               documents on the Ceramic Network from the console using the referenced API methods
             </li>
             <li>
-              <a href="https://developers.idx.xyz/build/writing/" target="_blank">Write</a> and
-              <a href="https://developers.idx.xyz/build/reading/" target="_blank">read</a> records
-              on IDX from the console using the referenced API methods
+              Write and read records using
+              <a href="https://developers.ceramic.network/tools/glaze/did-datastore/#usage"
+                >DID DataStore</a
+              >
+              from the console using the referenced API methods.
             </li>
           </ol>
         </div>
