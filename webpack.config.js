@@ -24,6 +24,7 @@ module.exports = {
       https: require.resolve('https-browserify'),
       http: require.resolve('http-browserify'),
       os: require.resolve('os-browserify/browser'),
+      buffer: require.resolve('buffer'),
       assert: false,
       url: false,
     },
