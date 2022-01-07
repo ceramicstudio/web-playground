@@ -16,7 +16,7 @@
     "watch": "webpack --watch"
   },
   "dependencies": {
-    "@3id/connect": "^0.1.6",
+    "@3id/connect": "^0.2.5",
     "@ceramicnetwork/3id-did-resolver": "^1.2.7",
     "@ceramicnetwork/common": "^1.1.0",
     "@ceramicnetwork/http-client": "^1.4.3",
