@@ -16,7 +16,7 @@
     "watch": "webpack --watch"
   },
   "dependencies": {
-    "@3id/connect": "^0.1.6",
+    "@3id/connect": "^0.2.5",
     "@ceramicnetwork/3id-did-resolver": "^1.2.7",
     "@ceramicnetwork/common": "^1.1.0",
     "@ceramicnetwork/http-client": "^1.4.3",
@@ -39,7 +39,6 @@
   "devDependencies": {
     "@datamodels/identity-profile-basic": "^0.1.2",
     "@glazed/types": "^0.1.3",
-    "crypto-browserify": "^3.12.0",
     "did-jwt": "^5.2.0",
     "did-resolver": "^3.0.1",
     "eslint": "^7.25.0",
