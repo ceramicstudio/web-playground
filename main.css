@@ -1,0 +1,136 @@
+body {
+  background-color: #f7f7f9;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: auto;
+  padding-top: 25px;
+}
+
+header {
+  text-align: center;
+}
+
+h1 {
+  font-size: 2rem;
+}
+h3 {
+  font-size: 1.5rem;
+}
+p {
+  font-size: 1.2rem;
+}
+main {
+  max-width: 600px;
+}
+.logo {
+  height: 125px;
+  width: 125px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.hide {
+  display: none;
+  padding: 0;
+  margin: 0;
+}
+.center {
+  margin: 0 auto;
+}
+.loader {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: text-bottom;
+  border: 0.25em solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  -webkit-animation: spin 1s linear infinite;
+  -moz-animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite;
+  margin-right: 10px;
+}
+@-moz-keyframes spin {
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes spin {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.alert {
+  margin-top: 15px;
+}
+.space-around {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+ul {
+  padding-left: 20px;
+}
+
+/**
+  * Utils & overrides
+  */
+.small-logo {
+  height: 120px;
+  transition: ease all 0.3s;
+}
+.connection {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  margin: 0px 3px 2px 0;
+}
+.connection.offline {
+  background-color: red;
+}
+.connection.online {
+  background-color: rgb(41, 241, 41);
+}
+main {
+  margin-bottom: 40px;
+}
+
+/**
+  * Accordion
+  */
+.accordion {
+  width: 100%;
+}
+.accordion .head {
+  width: 100%;
+  font-weight: bold;
+  opacity: 1 !important;
+  cursor: pointer;
+}
+.accordion.acc-close .body {
+  max-height: 0;
+  overflow: hidden;
+  transition: ease-out max-height 0.5s;
+}
+.accordian.acc-open .body {
+  max-height: 500px;
+  overflow: hidden;
+  transition: ease-in max-height 0.3s;
+}
+
+/**
+  * Keep the DID visible.
+  */
+.sticky {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 20px;
+}

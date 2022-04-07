@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge"/>
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <title>Ceramic Web Playground</title>
     <meta
       name="description"
@@ -13,120 +13,23 @@
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
     />
-    <style>
-      body {
-        background-color: #f7f7f9;
-        display: flex;
-        flex-direction: column;
-        /* justify-content: center;
-        align-items: center; */
-        height: 100vh;
-        overflow: auto;
-        padding-top: 25px;
-      }
-
-      header {
-        text-align: center;
-      }
-
-      h1 {
-        font-size: 2rem;
-      }
-      h3 {
-        font-size: 1.5rem;
-        /* margin-left: 40px; */
-      }
-      p {
-        font-size: 1.2rem;
-      }
-      main {
-        max-width: 600px;
-      }
-      .logo {
-        height: 125px;
-        width: 125px;
-        margin-right: auto;
-        margin-left: auto;
-      }
-      .hide {
-        display: none;
-        padding: 0;
-        margin: 0;
-      }
-      .center {
-        margin: 0 auto;
-      }
-      .loader {
-        display: inline-block;
-        width: 2rem;
-        height: 2rem;
-        vertical-align: text-bottom;
-        border: 0.25em solid currentColor;
-        border-right-color: transparent;
-        border-radius: 50%;
-        -webkit-animation: spin 1s linear infinite;
-        -moz-animation: spin 1s linear infinite;
-        animation: spin 1s linear infinite;
-        margin-right: 10px;
-      }
-      @-moz-keyframes spin {
-        100% {
-          -moz-transform: rotate(360deg);
-        }
-      }
-      @-webkit-keyframes spin {
-        100% {
-          -webkit-transform: rotate(360deg);
-        }
-      }
-      @keyframes spin {
-        100% {
-          -webkit-transform: rotate(360deg);
-          transform: rotate(360deg);
-        }
-      }
-      .alert {
-        margin-top: 15px;
-      }
-      .space-around {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-      }
-      .ceramic-btn.active {
-        background-color: #f87237 !important;
-        color: white !important;
-      }
-      .idx-btn.active {
-        background-color: #6535ff !important;
-        color: white !important;
-      }
-      ul {
-        padding-left: 20px;
-      }
-      .documentation {
-        resize: both;
-        overflow: auto;
-        height: 200px;
-        width: 100%;
-        border: 1px solid transparent;
-        display: none;
-      }
-    </style>
+    <link rel="stylesheet" href="./main.css" />
   </head>
 
   <body>
     <div class="container">
       <header>
-        <div class="row">
+        <div class="row sticky">
           <div class="col-xs-12 alert hide" role="alert" id="alerts"></div>
           <div class="col-xs-offset-10 col-xs-2">
-            <span class="badge rounded-pill bg-secondary" id="userDID">Not Connected</span>
+            <span class="badge rounded-pill bg-secondary" id="userDID">
+              <div class="connection offline" id="status"></div>
+              <span id="did">Not Connected</span></span
+            >
           </div>
         </div>
         <div>
-          <img id="logo" src="images/web-playground-logo.svg" alt="web playground logo" />
+          <img id="logo" class="" src="images/web-playground-logo.svg" alt="web playground logo" />
         </div>
         <h1>Ceramic Web Playground</h1>
         <p>
@@ -136,72 +39,215 @@
         </p>
       </header>
       <main class="container center">
-        <div class="row">
-          <div class="col-xs-12 space-around">
-            <div class="btn btn-default ceramic-btn" id="activate_ceramic">Ceramic Docs</div>
-            <div class="btn btn-default idx-btn" id="activate_idx">IDX Docs</div>
-          </div>
-          <div class="col-xs-12 col-lg-6">
-            <iframe
-              class="documentation"
-              src="https://developers.ceramic.network/build/javascript/quick-start/"
-              id="ceramic_docs"
-            >
-            </iframe>
-          </div>
-          <div class="col-xs-12 col-lg-6 text-right">
-            <iframe
-              class="documentation"
-              src="https://developers.idx.xyz/build/quick-start/"
-              id="idx_docs"
-            ></iframe>
+        <div class="accordion acc-open" id="technologies">
+          <h3 class="head">Technologies</h3>
+          <div class="body">
+            <ul>
+              <li>
+                <a
+                  href="https://developers.ceramic.network/reference/javascript/clients/#http-client"
+                  target="_blank"
+                  >Ceramic HTTP Client</a
+                >: Provides access to the Ceramic Network via a remote node running Ceramic (and
+                IPFS).
+              </li>
+              <li>
+                <a
+                  href="https://developers.ceramic.network/build/authentication/#did-provider-or-wallet"
+                  target="_blank"
+                  >3ID Connect</a
+                >: Provides authentication to a DID (used by Ceramic) from a blockchain wallet, and
+                stores a link from this blockchain account to your DID in IDX.
+              </li>
+              <li>
+                <a
+                  href="https://developers.ceramic.network/reference/glaze/modules/datamodel/"
+                  target="_blank"
+                  >DataModels</a
+                >: Provides validation for data before it is commited to the Ceramic Network.
+              </li>
+              <li>
+                <a
+                  href="https://developers.ceramic.network/tools/glaze/did-datastore/"
+                  target="_blank"
+                  >DID-DataStore</a
+                >: Implements the Identity Index protocol to store and retrieve data associated with
+                a DID from a provided DataModel.
+              </li>
+            </ul>
           </div>
         </div>
-        <div id="techologies">
-          <h3>Technologies</h3>
-          <ul>
-            <li>
-              <a
-                href="https://developers.ceramic.network/reference/javascript/clients/#http-client"
-                target="_blank"
-                >Ceramic HTTP Client</a
-              >: Provides access to the Ceramic Network via a remote node running Ceramic (and
-              IPFS).
-            </li>
-            <li>
-              <a
-                href="https://developers.ceramic.network/build/authentication/#did-provider-or-wallet"
-                target="_blank"
-                >3ID Connect</a
-              >: Provides authentication to a DID (used by Ceramic) from a blockchain wallet, and
-              stores a link from this blockchain account to your DID in IDX.
-            </li>
-            <li>
-              <a href="https://idx.xyz" target="_blank">IDX</a>: Provides a way to create identity
-              records for a DID. Records are stored on Ceramic and can represent links to blockchain
-              accounts or other user data.
-            </li>
-          </ul>
-        </div>
-        <div id="instructions" class="hide">
-          <h3>Usage</h3>
-          <ol>
-            <li>Open your console by inspecting the page</li>
-            <li>Authenticate by clicking "Connect wallet"</li>
-            <li>Approve prompts in your Web3 wallet</li>
-            <li>Wait to see "Connected with DID" in your console</li>
-            <li>
-              <a href="https://developers.ceramic.network/build/writes/" target="_blank">Write</a>
-              and
-              <a href="https://developers.ceramic.network/build/queries/" target="_blank">read</a>
-              documents on the Ceramic Network from the console using the referenced API methods
-            </li>
-            <li>
-              <a href="https://developers.idx.xyz/build/writing/" target="_blank">Write</a> and
-              <a href="https://developers.idx.xyz/build/reading/" target="_blank">read</a> records
-              on IDX from the console using the referenced API methods
-            </li>
-          </ol>
+        <div id="post-auth" class="hide">
+          <div class="accordion acc-open" id="authenticating">
+            <h3 class="head">Flight Check</h3>
+            <div class="body">
+              <p>A few things you should see before we continue on...</p>
+              <ol>
+                <li>
+                  In the top right corner you should see a little pill that has some random text,
+                  this is a concatenated version of your DID. If you want to see the full version in
+                  your browser inspector's console you can enter <code>ceramic.did.id</code> to see
+                  your full DID.
+                </li>
+                <li>
+                  (optional) We recommend you take a quick look at the technologies we've listed
+                  above to get a feel for what Ceramic is capable of.
+                </li>
+              </ol>
+            </div>
+          </div>
+          <div class="accordion acc-close" id="variables">
+            <h3 class="head">Variables</h3>
+            <div class="body">
+              <ul>
+                <li>
+                  <code>ceramic</code>, our core client providing access to a testnet node to handle
+                  all of our reads & writes.
+                </li>
+                <li>
+                  <code>TileDocument</code>, exposes our TileDocument library used to create
+                  documents on the Ceramic Network. Once created a document is called a Tile, and
+                  the Tile's history is referred to as a "stream".
+                </li>
+
+                <li>
+                  <code>DataStore</code>, our DID-DataStore instance. This is how we'll be
+                  interacting with the Identity Index protocol. The BasicProfile DataModel has been
+                  preloaded & configured.
+                </li>
+              </ul>
+              <em
+                >Please note, you will not be able to use <code>{import ...}</code> statements as we
+                are not transpling live and you are limited to the technologies provided.</em
+              >
+            </div>
+          </div>
+          <div class="accordion acc-close" id="tiles">
+            <h3 class="head">Firing Your First Tile (Sample #1)</h3>
+            <div class="body">
+              <p>
+                The best way to start creating data on the Ceramic Network is to create it. This is
+                going to be a step by step guide to get you started. For this we'll be building some
+                sample blog posts, but you can use any data as long as it's structured as a JSON
+                object.
+              </p>
+              <ol>
+                <li>
+                  Let's make sure you're authenticated. In your browser's inspector window open up
+                  the 'console' tab & enter <code>ceramic.did.id</code>. You should see something
+                  like <code>did:3:...</code>. If you don't refresh the page & re-authenticate your
+                  DID.
+                </li>
+                <li>
+                  Let's start by disecting the following command:<br />
+                  <code>
+                    const post1 = await TileDocument.create(ceramic, {
+                    <br />&nbsp;&nbsp;title:'My first Tile', <br />&nbsp;&nbsp;body: 'My first
+                    Tile', <br />&nbsp;&nbsp;author: ceramic.did.id <br />}) </code
+                  ><br />
+                  First, TileDocument.create() is the method to create a new tile. It requires two
+                  arguments, the ceramic client and the tile data. Now you're ready to run the
+                  command and create your tile!
+                </li>
+                <li>
+                  You might have seen in your console that it returned undefined. This is because
+                  we're creating, not querying the tile. To see the details about it run
+                  <code>post1.content</code> and your browser will show you the content you just
+                  created!
+                </li>
+                <li>
+                  That's cool, but what happens when you close your browser and your inspector
+                  forgets what we created? That's where the StreamID comes into play. Run
+                  <code>post1.id.toString()</code> to see your StreamID. If you're familiar with
+                  databases this is similar to your primary key. We can then load a stream by
+                  running the following:
+                  <code>TileDocument.load(ceramic, post1.id.toString())</code>. You can copy & paste
+                  the string from the first command in this step but you don't need to.
+                </li>
+              </ol>
+              <p>
+                That's it! You've now created & loaded your data on Ceramic. You might be wondering
+                how you can load your data without writing down the StreamID or storing it
+                somewhere, that's really where the Identity Index protocol comes in handy.
+              </p>
+            </div>
+          </div>
+          <div class="accordion acc-close" id="datastore">
+            <h3 class="head">Working with DID-DataStore (Sample #2)</h3>
+            <div class="body">
+              <p>
+                Now that you've created a tile it's time to work on creating data associated with
+                your personal DID. We've provided the DID-DataStore that has the BasicProfile schema
+                already loaded so all we have to do is use it.
+              </p>
+              <ol>
+                <li>
+                  If you haven't worked with Ceramic or the Web Playground in the past take a look
+                  at "Firing Your First Tile".
+                </li>
+                <li>
+                  Before we jump into using our DID-DataStore, let's take a look at how it's
+                  configured. You can find the source code
+                  <a
+                    href="https://github.com/ceramicstudio/web-playground/blob/main/src/datastore.ts#L10"
+                    >on GitHub</a
+                  >. If you take a look you can see that we're providing a 'publishedModel' to our
+                  DID-DataStore, this is a manual way to provide the Schema & Definition to
+                  DID-DataStore, you can also use a DataModel that has been published to NPM for
+                  this to make it easier.
+                </li>
+                <li>
+                  Now that we've set up the groundwork, we can actually interact with DID-DataStore.
+                  So let's start by querying your profile, all you need to do is run:
+                  <code>await DataStore.get('basicProfile')</code>
+                  <br />
+                  You might see a JSON response if you've used
+                  <a href="https://clay.self.id">Self.ID</a> to create a profile in the past, or you
+                  might just see <code>undefined</code>. Unless you see an error message you're good
+                  to move to the next step.
+                </li>
+                <li>
+                  Retrieving your profile is fine, but what about another persons profile? You can
+                  easily query this by providing their DID! Let's take a look at my profile. My DID
+                  is:
+                  <code>did:3:bafyreihq3gquqeuzblcpckqoanlftg7zp3wivkvg26mzfiwvau45rrepie</code> and
+                  with that we can run
+                  <code
+                    >await DataStore.get('basicProfile',
+                    'did:3:bafyreihq3gquqeuzblcpckqoanlftg7zp3wivkvg26mzfiwvau45rrepie')</code
+                  >
+                  and retrieve my profile, if you were building your own app
+                  <code>ceramic.did.id</code> would reference the DID that is authenticating the
+                  Ceramic instance.
+                </li>
+                <li>
+                  So, we've done a lot of querying and no creation. We can <em>almost</em> fix that.
+                  First let's talk a bit about best practices. DataStore provides two different
+                  utilities for updating a record. The first should ONLY be used when you're
+                  creating a Tile for the first time, this being <code>DataStore.set()</code>. If
+                  you call this on a record that already has content you will be overwriting all
+                  other data in the tile (the stream will maintain it's history though so not all is
+                  lost). The second option is the recommended way to create & update data on
+                  Ceramic. This is <code>DataStore.merge()</code>, the main difference is that using
+                  merge will only update the fields that we are providing.
+                </li>
+                <li>
+                  Finally, we can write to our profile. As mentioned above, we want to be sure to
+                  use the right write method and provide good data to use.
+                  <code
+                    >await DataStore.merge('basicProfile', {name: 'YOUR NAME HERE', description:
+                    'Tell us about yourself!', emoji: '✌🏻' }</code
+                  >
+                </li>
+              </ol>
+              <p>
+                That's it! You've now created (or updated) your basicProfile using DID-DataStore, if
+                you take a look at <a href="#" id="profile-cta">Self.ID</a> you can see your profile
+                has already been updated. Welcome to the world of interoperable data, we're happy to
+                have you here.
+              </p>
+            </div>
+          </div>
         </div>
       </main>
       <button

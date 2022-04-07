@@ -27,6 +27,7 @@ const authenticate = async (): Promise<string> => {
     provider: provider,
     resolver: resolverRegistry,
   })
+  document.getElementById('authenticating')?.classList.remove('hide')
   await did.authenticate()
   await ceramic.setDID(did)
   const datastore = createDataStore(ceramic)
@@ -47,44 +48,45 @@ const updateAlert = (status: string, message: string) => {
   }
 }
 
-document.getElementById('activate_ceramic')?.addEventListener('click', () => {
-  const ceramicIframe = document.getElementById('ceramic_docs')
-  if (ceramicIframe?.classList.contains('show')) {
-    ceramicIframe?.classList.remove('show')
-    document.getElementById('activate_ceramic')?.classList.remove('active')
-  } else {
-    document.getElementById('activate_ceramic')?.classList.add('active')
-    ceramicIframe?.classList.add('show')
-  }
-})
+const accordions = document.getElementsByClassName('accordion')
 
-document.getElementById('activate_idx')?.addEventListener('click', () => {
-  const idxIframe = document.getElementById('idx_docs')
-  if (idxIframe?.classList.contains('show')) {
-    idxIframe?.classList.remove('show')
-    document.getElementById('activate_idx')?.classList.remove('active')
-  } else {
-    document.getElementById('activate_idx')?.classList.add('active')
-    idxIframe?.classList.add('show')
-  }
-})
+for (const accordion of accordions) {
+  accordion.addEventListener('click', (e) => {
+    if (accordion.classList.contains('acc-close')) {
+      accordion.classList.remove('acc-close')
+      accordion.classList.add('acc-open')
+    } else {
+      accordion.classList.add('acc-close')
+      accordion.classList.remove('acc-open')
+    }
+  })
+}
+
+document.getElementsByClassName('accordion')
 
 document.getElementById('bauth')?.addEventListener('click', () => {
   document.getElementById('loader')?.classList.remove('hide')
   authenticate().then(
     (id) => {
-      const userDid = document.getElementById('userDID')
+      const userDid = document.getElementById('did')
+      const status = document.getElementById('status')
       const concatId = id.split('did:3:')[1]
       if (userDid !== null) {
         userDid.textContent = `${concatId.slice(0, 4)}...${concatId.slice(
           concatId.length - 4,
           concatId.length
         )}`
+        status?.classList.remove('offline')
+        status?.classList.add('online')
+        document.getElementById('logo')?.classList.add('small-logo')
       }
       updateAlert('success', `Successfully connected with ${id}`)
-      document.getElementById('loader')?.classList.add('hide')
       document.getElementById('bauth')?.classList.add('hide')
-      document.getElementById('instructions')?.classList.remove('hide')
+      document.getElementById('profile-cta')?.addEventListener('click', () => {
+        window.open(`https://clay.self.id/${id}`, '_blank')
+      })
+      document.getElementById('post-auth')?.classList.remove('hide')
+      document.getElementById('post-auth')?.classList.add('show')
     },
     (err) => {
       console.error('Failed to authenticate:', err)
