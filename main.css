@@ -108,6 +108,7 @@ main {
   */
 .accordion {
   width: 100%;
+  padding-bottom: 5px;
 }
 .accordion .head {
   width: 100%;
