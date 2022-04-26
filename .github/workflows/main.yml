@@ -2,9 +2,9 @@ name: NodeJS with Webpack
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches: main
+  merge:
+    branches: main
 
 jobs:
   build:
@@ -34,4 +34,4 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git commit -m 'deploy'
-          git push
+          git push origin HEAD:main
