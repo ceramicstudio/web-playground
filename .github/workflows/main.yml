@@ -3,8 +3,6 @@ name: NodeJS with Webpack
 on:
   push:
     branches: main
-  merge:
-    branches: main
 
 jobs:
   build:
