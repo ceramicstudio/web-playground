@@ -1,4 +1,4 @@
-name: NodeJS with Webpack
+name: Build and deploy to Pages
 
 on:
   pull_request:
