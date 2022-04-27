@@ -3,6 +3,7 @@ name: Build and deploy to Pages
 on:
   pull_request:
     branches: main
+    types: [closed]
 
 jobs:
   build:
