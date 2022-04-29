@@ -108,23 +108,45 @@ main {
   */
 .accordion {
   width: 100%;
-  padding-bottom: 5px;
+  /* padding-bottom: 5px; */
+  cursor: pointer;
 }
 .accordion .head {
   width: 100%;
   font-weight: bold;
   opacity: 1 !important;
-  cursor: pointer;
+  background-color: white;
+  padding: 15px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.accordion .head h3 {
+  margin: 0;
 }
 .accordion.acc-close .body {
   max-height: 0;
   overflow: hidden;
-  transition: ease-out max-height 0.5s;
+  transition: ease-out max-height 0.3s;
 }
-.accordian.acc-open .body {
+.accordion.acc-open .body {
+  margin-top: 10px;
   max-height: 500px;
   overflow: hidden;
   transition: ease-in max-height 0.3s;
+  margin-left: 15px;
+}
+.accordion.acc-open .head img {
+  transform: rotate(-90deg);
+  transition: ease transform 0.3s;
+  height: 10px;
+}
+.accordion.acc-close .head img {
+  transform: rotate(90deg);
+  transition: ease transform 0.3s;
+  height: 10px;
 }
 
 /**
