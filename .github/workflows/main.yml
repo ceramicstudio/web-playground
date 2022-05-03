@@ -1,0 +1,36 @@
+name: Build and deploy to Pages
+
+on:
+  pull_request:
+    branches: main
+    types: [closed]
+
+jobs:
+  build:
+    if: ${{github.event.pull_request.merged == true}}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to GH Pages
+        run: |
+          git add --all
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m 'deploy'
+          git push origin HEAD:main
